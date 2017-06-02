@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-mapping>
+   <class name="ar.com.reduceFatFast.model.Person" table="person">
+      <id name="id" type="long" column="id">
+         <generator class="native"/>
+      </id>
+      <property name="lastname" column="LASTNAME" type="string"/>
+      <property name="firstname" column="FIRSTNAME" type="string"/>
+      <property name="bithdate" column="BIRTHDATE" type="java.util.Date"/>
+      <property name="weight" column="WEIGHT" type="long"/>
+      <property name="width" column="WIDTH" type="long"/>
+   </class>
+</hibernate-mapping>
