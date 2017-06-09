@@ -1,7 +1,6 @@
 package ar.com.reduceFatFast.repository.jpa;
 
 import org.springframework.context.annotation.Profile;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import ar.com.reduceFatFast.model.UserAccount;
@@ -9,8 +8,14 @@ import ar.com.reduceFatFast.repository.AccountRepository;
 
 @Repository
 @Profile("test")
-public interface AccountJpaRepository extends AccountRepository, JpaRepository<UserAccount, Long>{
+public class AccountJpaRepository extends RFFJpaRepository<UserAccount> implements AccountRepository{
 	
-	public Boolean findByUsernameAndPassword(String username, String password);
+	public Boolean findByUsernameAndPassword(String username, String password) {
+		return false;
+	}
+
+	public boolean saveUser(UserAccount u) {
+		return false;
+	}
 
 }

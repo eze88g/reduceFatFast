@@ -1,7 +1,6 @@
 package ar.com.reduceFatFast;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 import org.h2.server.web.WebServlet;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +13,7 @@ import org.springframework.context.annotation.ImportResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.support.ResourcePatternUtils;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 
-import ar.com.reduceFatFast.model.UserAccount;
 import ar.com.reduceFatFast.repository.AccountRepository;
 
 @SpringBootApplication

@@ -3,7 +3,6 @@
  */
 package ar.com.reduceFatFast.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.Profile;
@@ -46,6 +45,6 @@ public class AccountService {
 	}
 
 	public boolean save(UserAccount u) {
-		return this.getAccountRepository().save(u);
+		return this.getAccountRepository().saveUser(u);
 	}
 }
