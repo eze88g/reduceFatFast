@@ -25,7 +25,6 @@ import ar.com.reduceFatFast.service.AccountService;
  *
  */
 @Configuration
-@ImportResource("classpath:config.xml")
 @Validated
 @RestController
 public class AccountController {

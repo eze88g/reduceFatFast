@@ -8,8 +8,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ImportResource;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import ar.com.reduceFatFast.dto.PersonDto;
@@ -17,6 +15,7 @@ import ar.com.reduceFatFast.exception.FatFastException;
 import ar.com.reduceFatFast.model.Measure;
 import ar.com.reduceFatFast.model.Person;
 import ar.com.reduceFatFast.repository.PersonRepository;
+import ar.com.reduceFatFast.repository.jpa.PersonJpaRepository;
 
 /**
  * @author joaco
@@ -24,12 +23,10 @@ import ar.com.reduceFatFast.repository.PersonRepository;
  */
 @Service
 @Configuration
-@ImportResource("classpath:config.xml")
-@Profile({"development"})
 public class PersonService {
 	
 	@Autowired
-	private PersonRepository personRepository;
+	private PersonJpaRepository personRepository;
 	
 	public Boolean addPerson(PersonDto person) {
 		return null;
@@ -65,14 +62,14 @@ public class PersonService {
 	/**
 	 * @return the personRepository
 	 */
-	public PersonRepository getPersonRepository() {
+	public PersonJpaRepository getPersonRepository() {
 		return personRepository;
 	}
 
 	/**
 	 * @param personRepository the personRepository to set
 	 */
-	public void setPersonRepository(PersonRepository personRepository) {
+	public void setPersonRepository(PersonJpaRepository personRepository) {
 		this.personRepository = personRepository;
 	}
 	
