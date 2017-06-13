@@ -17,6 +17,7 @@ public class Grupo {
 	
 	public void agregarPaciente(Paciente unPaciente){
 		pacientes.add(unPaciente);
+		unPaciente.setGrupo(this);
 	}
 
 	public void quitarPaciente(Paciente unPaciente){
