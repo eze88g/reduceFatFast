@@ -8,7 +8,28 @@ import ar.com.reduceFatFast.model.Comida.ComidaDelDia;
 public class DietaSemanal {
 	public boolean validacion;
 //	private List<Dia> dias ;
-	private List<Dia> dias = new ArrayList<Dia>(); //TODO: Donde incluir la cantidad??
+	//public List<Dia> dias = new ArrayList<Dia>(); //TODO: Donde incluir la cantidad??
+	public Dia dias[] ;
+
+	public DietaSemanal() {
+		dias = new Dia[7] ;
+		for (int i=0;i<7;i++)
+		{
+			dias[i]=new Dia();
+		}
+		
+	}
+	
+	
+	public Dia getDia(Integer n) {
+		return dias[n];
+	}
+
+
+	public void setDias(Dia[] dias) {
+		this.dias = dias;
+	}
+
 
 
 	public void setValidacion(boolean validacion) {
@@ -16,11 +37,7 @@ public class DietaSemanal {
 	}
 	
 	public void agregarComida (Comida unaComida, Integer numeroDeDia, ComidaDelDia comidaDelDia){
-<<<<<<< HEAD
-		dias.get(numeroDeDia).setComida(comidaDelDia, unaComida);
-=======
-		//dias.get(numeroDeDia).setComida(comidaDelDia, unaComida);
->>>>>>> 7a395380006c97e5603c6fcbf251b8a6891f4ae4
+		dias[numeroDeDia].setComida(comidaDelDia, unaComida);
 	}
 	
 }

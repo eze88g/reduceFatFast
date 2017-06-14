@@ -1,15 +1,38 @@
 package ar.com.reduceFatFast.model;
 
-<<<<<<< HEAD
-import java.util.ArrayList;
+
 import java.util.List;
 
 import ar.com.reduceFatFast.model.Comida.ComidaDelDia;
 
 public class Dia {
 
-	private List<Comida> comidas = new ArrayList<Comida>();
+	//private List<Comida> comidas;
+	private Comida comidas [];
 	
+	public Dia() {
+		//this.comidas = new ArrayList<Comida>();
+		this.comidas = new Comida[4];
+		for (int i=0;i<4;i++)
+		{
+			comidas[i]=new Comida("null");
+		}
+	}
+
+	public Comida getComida(Integer n) {
+		return comidas[n];
+	}
+	
+	public Comida[] getComidas() {
+		return comidas;
+	}
+
+
+	public void setComidas(Comida[] comidas) {
+		this.comidas = comidas;
+	}
+
+
 	public void setComida(ComidaDelDia comidaDelDia, Comida unaComida) {
 		int n ;
 		switch(comidaDelDia) {
@@ -29,42 +52,8 @@ public class Dia {
 		default : // Optional
 			n = 0;
 		}
-		comidas.add(n,unaComida);
+		//comidas.add(n,unaComida); 
+		comidas[n]=unaComida;
 	}
 }
 
-
-=======
-public class Dia {
-
-	Comida desayuno;
-	Comida almuerzo;
-	Comida merienda;
-	Comida cena;
-	
-	public Comida getDesayuno() {
-		return desayuno;
-	}
-	public void setDesayuno(Comida desayuno) {
-		this.desayuno = desayuno;
-	}
-	public Comida getAlmuerzo() {
-		return almuerzo;
-	}
-	public void setAlmuerzo(Comida almuerzo) {
-		this.almuerzo = almuerzo;
-	}
-	public Comida getMerienda() {
-		return merienda;
-	}
-	public void setMerienda(Comida merienda) {
-		this.merienda = merienda;
-	}
-	public Comida getCena() {
-		return cena;
-	}
-	public void setCena(Comida cena) {
-		this.cena = cena;
-	}
-}
->>>>>>> 7a395380006c97e5603c6fcbf251b8a6891f4ae4

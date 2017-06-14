@@ -13,6 +13,7 @@ public class Grupo {
 	
 	public Grupo(Nutricionista unNutricionista) {
 		this.unNutricionista = unNutricionista;
+		this.unaDietaSemanal = new DietaSemanal();
 	}
 	
 	public void agregarPaciente(Paciente unPaciente){

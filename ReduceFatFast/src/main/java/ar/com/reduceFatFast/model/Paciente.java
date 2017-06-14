@@ -21,6 +21,10 @@ public class Paciente extends Usuario {
 		grupo = unGrupo;
 	}
 	
+	public Grupo getGrupo() {
+		return grupo;
+	}
+
 	public void agregarIngrediente(Ingrediente unIngrediente, int unaCantidad,String unaUnidad, Comida unaComida ){
 		unaComida.agregarIngrediente(unIngrediente, unaCantidad, unaUnidad);
 	}
