@@ -5,15 +5,12 @@ package ar.com.reduceFatFast.model;
 
 import java.util.Date;
 
-<<<<<<< HEAD
-=======
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
->>>>>>> 7a395380006c97e5603c6fcbf251b8a6891f4ae4
 import lombok.Data;
 
 /**
