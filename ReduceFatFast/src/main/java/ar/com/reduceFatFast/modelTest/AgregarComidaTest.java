@@ -28,7 +28,7 @@ public class AgregarComidaTest {
 		unNutricionista.agregarUnPacienteAlGrupo(paciente2);
 		
 		//Creacion de ingredientes y comida
-		//TODO: habrá un registro de las comidas creadas o se guardan solamente en la comida del dia?
+		//TODO: habrï¿½ un registro de las comidas creadas o se guardan solamente en la comida del dia?
 		Ingrediente ingrediente1 = paciente1.crearIngrediente("Harina", 100);
 		Ingrediente ingrediente2 = paciente1.crearIngrediente("Leche", 50);
 		Comida comida1 = paciente1.crearComida("Torta");
@@ -57,7 +57,7 @@ public class AgregarComidaTest {
 			{
 				//unGrupo.getDietaSemanal().getDia(i).getComida(j).getNombre();
 				System.out.println("  Comida:"+(j+1)+" "+unGrupo.getDietaSemanal().getDia(i).getComida(j).getNombre());
-				unGrupo.getDietaSemanal().getDia(i).getComida(j).getIngredientes().forEach(ingredienteL->System.out.println("    "+ingredienteL.getIngrediente().getName()+" "+ingredienteL.getCantidad()+ingredienteL.getUnidad()));
+				unGrupo.getDietaSemanal().getDia(j).getComida(j).getIngredientes().forEach(ingredienteL->System.out.println("    "+ingredienteL.getIngrediente().getName()+" "+ingredienteL.getCantidad()+ingredienteL.getUnidad()));
 			}
 		}
 		

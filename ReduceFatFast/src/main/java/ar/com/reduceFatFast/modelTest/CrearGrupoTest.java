@@ -29,6 +29,7 @@ public class CrearGrupoTest {
 		unNutricionista.agregarUnPacienteAlGrupo(paciente2);
 		
 		System.out.println("Pacientes del grupo:");
-		unNutricionista.getGrupo().getPacientes().forEach(pacienteL->System.out.println(pacienteL.getNombre()));
+		// TODO
+		//unNutricionista.getGrupo().getPacientes().forEach(pacienteL->System.out.println(pacienteL.getNombre()));
 	}
 }

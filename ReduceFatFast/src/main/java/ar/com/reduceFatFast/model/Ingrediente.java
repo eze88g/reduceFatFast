@@ -1,7 +1,16 @@
 package ar.com.reduceFatFast.model;
 
-public class Ingrediente {
-	private String oid;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+import lombok.Data;
+
+@Entity
+public @Data class Ingrediente {
+	@Id @GeneratedValue(strategy=GenerationType.AUTO)
+	private long id;
 	String name ;
 	int calorias;
 	
@@ -10,30 +19,8 @@ public class Ingrediente {
 		this.name = name;
 		this.calorias = calorias;
 	}
-
-	public String getOid() {
-		return oid;
-	}
-
-	public void setOid(String oid) {
-		this.oid = oid;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public int getCalorias() {
-		return calorias;
-	}
-
-	public void setCalorias(int calorias) {
-		this.calorias = calorias;
-	}
+	
+	protected Ingrediente(){}
 	
 }
 

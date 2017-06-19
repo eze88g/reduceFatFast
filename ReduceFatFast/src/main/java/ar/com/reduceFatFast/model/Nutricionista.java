@@ -1,37 +1,42 @@
 package ar.com.reduceFatFast.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
-public class Nutricionista extends Usuario {
-	private Grupo grupo;
-	private GestorDeUsuario gestor;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+
+import lombok.Data;
+
+@DiscriminatorColumn(name="NUTRICIONISTA")
+@Entity
+public @Data class Nutricionista extends Usuario {
 	
+	@OneToMany(mappedBy="nutricionista")
+	private List<Grupo> grupo;
+	
+	protected Nutricionista(){}
 	
 	public Nutricionista(String nombre, int dni, GestorDeUsuario gestor) {
 		super(nombre, dni);
-		this.gestor = gestor;
 	}
 
 	public void crearGrupo(){
-		grupo = gestor.crearGrupo(this);
 	}
 	
 	//Hay que implemtentar la b'usqueda del paciente
 	public void agregarUnPacienteAlGrupo (Paciente paciente)
 	{
+		// TODO: Fix this method
 		//Paciente paciente = gestor.buscarPaciente(dni);
-		grupo.agregarPaciente(paciente);
+//		this.getGrupo().get(0).agregarPaciente(paciente);
 	}
 
 	public void validarDieta()
 	{
-		DietaSemanal dieta = grupo.getDietaSemanal();
+		// TODO: Fix this method
+		DietaSemanal dieta = this.getGrupo().get(0).getDietaSemanal();
 		dieta.setValidacion(true);
-	}
-	
-	public Grupo getGrupo() {
-		return grupo;
 	}
 
 }

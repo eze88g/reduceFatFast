@@ -1,9 +1,24 @@
 package ar.com.reduceFatFast.model;
 
-public class IngredienteComida {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+import lombok.Data;
+
+@Entity
+public @Data class IngredienteComida {
+	
+	@Id @GeneratedValue(strategy=GenerationType.AUTO)
+	private long id;
+	@ManyToOne
 	private Ingrediente ingrediente ;
 	private Integer cantidad;
 	private String unidad;
+	
+	protected IngredienteComida() {}
 	
 	public IngredienteComida(Ingrediente ingrediente, Integer cantidad, String unidad) {
 		this.ingrediente = ingrediente;
