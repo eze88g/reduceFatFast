@@ -3,12 +3,23 @@ package ar.com.reduceFatFast.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
 import ar.com.reduceFatFast.model.Comida.ComidaDelDia;
+import lombok.Data;
 
-public class Paciente extends Usuario {
+@Entity
+@DiscriminatorColumn(name="PACIENTE")
+public @Data class Paciente extends Usuario {
 
+	@ManyToMany
 	private Set<Comida> comidas = new HashSet<Comida>();
 	//private Set<Ingrediente> ingredientes = new HashSet<Ingrediente>();
+	@ManyToOne
 	public Grupo grupo;
 	
 	public Paciente(String nombre, int dni) {

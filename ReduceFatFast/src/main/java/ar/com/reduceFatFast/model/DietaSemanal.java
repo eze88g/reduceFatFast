@@ -1,43 +1,33 @@
 package ar.com.reduceFatFast.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
 import ar.com.reduceFatFast.model.Comida.ComidaDelDia;
+import lombok.Data;
 
-public class DietaSemanal {
+@Entity
+public @Data class DietaSemanal {
+	
+	@Id @GeneratedValue(strategy=GenerationType.AUTO)
+	private long id;
+	
 	public boolean validacion;
-//	private List<Dia> dias ;
 	//public List<Dia> dias = new ArrayList<Dia>(); //TODO: Donde incluir la cantidad??
-	public Dia dias[] ;
-
-	public DietaSemanal() {
-		dias = new Dia[7] ;
-		for (int i=0;i<7;i++)
-		{
-			dias[i]=new Dia();
-		}
-		
-	}
-	
-	
-	public Dia getDia(Integer n) {
-		return dias[n];
-	}
-
-
-	public void setDias(Dia[] dias) {
-		this.dias = dias;
-	}
-
-
-
-	public void setValidacion(boolean validacion) {
-		this.validacion = validacion;
-	}
+	@OneToMany
+	public List<Dia> dias;
 	
 	public void agregarComida (Comida unaComida, Integer numeroDeDia, ComidaDelDia comidaDelDia){
-		dias[numeroDeDia].setComida(comidaDelDia, unaComida);
+		dias.set(numeroDeDia, new Dia(comidaDelDia, unaComida));
+	}
+
+	public Dia getDia(int j) {
+		return this.getDias().get(j);
 	}
 	
 }

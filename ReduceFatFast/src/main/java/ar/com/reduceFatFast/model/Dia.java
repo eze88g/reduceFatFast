@@ -1,37 +1,44 @@
 package ar.com.reduceFatFast.model;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import org.springframework.beans.factory.annotation.Value;
+
 import ar.com.reduceFatFast.model.Comida.ComidaDelDia;
+import lombok.Data;
 
-public class Dia {
+@Entity
+public @Data class Dia {
+	
+	@Id @GeneratedValue(strategy=GenerationType.AUTO)
+	private long id;
 
-	//private List<Comida> comidas;
-	private Comida comidas [];
+	@Value("${modelo.cantidadComidasPorDia}")
+	private Integer cantidadComidasPorDia;
+
+	@OneToMany
+	private List<Comida> comidas;
 	
 	public Dia() {
-		//this.comidas = new ArrayList<Comida>();
-		this.comidas = new Comida[4];
-		for (int i=0;i<4;i++)
-		{
-			comidas[i]=new Comida("null");
-		}
+		this.setComidas(new ArrayList<Comida>());
+	}
+
+	public Dia(ComidaDelDia comidaDelDia, Comida unaComida) {
+		this();
+		this.setComida(comidaDelDia, unaComida);
 	}
 
 	public Comida getComida(Integer n) {
-		return comidas[n];
+		return ((ArrayList<Comida>)this.getComidas()).get(n);
 	}
-	
-	public Comida[] getComidas() {
-		return comidas;
-	}
-
-
-	public void setComidas(Comida[] comidas) {
-		this.comidas = comidas;
-	}
-
 
 	public void setComida(ComidaDelDia comidaDelDia, Comida unaComida) {
 		int n ;
@@ -52,8 +59,7 @@ public class Dia {
 		default : // Optional
 			n = 0;
 		}
-		//comidas.add(n,unaComida); 
-		comidas[n]=unaComida;
+		this.getComidas().set(n, unaComida);
 	}
 }
 

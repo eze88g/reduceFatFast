@@ -1,19 +1,32 @@
 package ar.com.reduceFatFast.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
-public class Grupo {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import lombok.Data;
+
+@Entity
+public @Data class Grupo {
 	
-	private String oid;
-	private Set<Paciente> pacientes = new HashSet<Paciente>();
-	private Nutricionista unNutricionista;
-	private DietaSemanal unaDietaSemanal;
+	@Id @GeneratedValue(strategy=GenerationType.AUTO) 
+	private long id;
+	@OneToMany
+	private List<Paciente> pacientes;
+	@ManyToOne
+	private Nutricionista nutricionista;
+	@ManyToOne
+	private DietaSemanal dietaSemanal;
 
 	
-	public Grupo(Nutricionista unNutricionista) {
-		this.unNutricionista = unNutricionista;
-		this.unaDietaSemanal = new DietaSemanal();
+	public Grupo(Nutricionista nutricionista) {
+		this.setNutricionista(nutricionista);
+		this.setDietaSemanal(new DietaSemanal());
 	}
 	
 	public void agregarPaciente(Paciente unPaciente){
@@ -24,36 +37,5 @@ public class Grupo {
 	public void quitarPaciente(Paciente unPaciente){
 		pacientes.remove(unPaciente);
 	}
-	
-	public String getOid() {
-		return oid;
-	}
 
-	public void setOid(String oid) {
-		this.oid = oid;
-	}
-
-	public Set<Paciente> getPacientes() {
-		return pacientes;
-	}
-/*
-	public void setPacientes(Set<Paciente> pacientes) {
-		this.pacientes = pacientes;
-	}
-*/
-	public Nutricionista getNutricionista() {
-		return unNutricionista;
-	}
-
-	public void setNutricionista(Nutricionista unNutricionista) {
-		this.unNutricionista = unNutricionista;
-	}
-
-	public DietaSemanal getDietaSemanal() {
-		return unaDietaSemanal;
-	}
-
-	public void setDietaSemanal(DietaSemanal unaDietaSemanal) {
-		this.unaDietaSemanal = unaDietaSemanal;
-	}
 }

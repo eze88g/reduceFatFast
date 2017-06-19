@@ -1,11 +1,27 @@
 package ar.com.reduceFatFast.model;
 
-import java.sql.Date;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.Table;
 
-public class Usuario {
-	private String oid;
+import lombok.Data;
+
+@Inheritance
+@DiscriminatorColumn(name="USER_TYPE")
+@Table(name="USUARIO")
+@Entity
+public @Data class Usuario {
+	
+	@Id @GeneratedValue(strategy=GenerationType.AUTO)
+	private long id;
 	String nombre;
 	int dni;
+	
+	protected Usuario(){}
 	
 	public Usuario(String nombre, int dni) {
 		super();

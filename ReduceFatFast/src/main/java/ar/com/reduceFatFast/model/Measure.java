@@ -5,18 +5,21 @@ package ar.com.reduceFatFast.model;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 import lombok.Data;
 
 /**
  * @author joaco
  *
  */
-//@Entity
+@Entity
 public @Data class Measure {
 		
-		//@Id
+		@Id
 		private long id;
-		Long weight;
-		Date date;
-		Role tookBy;
+		private Long weight;
+		private Date date;
+		//private Role tookBy;
 }
