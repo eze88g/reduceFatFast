@@ -15,7 +15,6 @@ import ar.com.reduceFatFast.exception.FatFastException;
 import ar.com.reduceFatFast.model.Measure;
 import ar.com.reduceFatFast.model.Person;
 import ar.com.reduceFatFast.repository.PersonRepository;
-import ar.com.reduceFatFast.repository.jpa.PersonJpaRepository;
 
 /**
  * @author joaco
@@ -26,10 +25,10 @@ import ar.com.reduceFatFast.repository.jpa.PersonJpaRepository;
 public class PersonService {
 	
 	@Autowired
-	private PersonJpaRepository personRepository;
+	private PersonRepository personRepository;
 	
-	public Boolean addPerson(PersonDto person) {
-		return null;
+	public Boolean addPerson(String lastname, String firstname, Date bithdate, Long weight, Long width) {
+		return personRepository.addPerson(lastname, firstname, bithdate, weight, width);
 	}
 	
 	public void delMeasure(Person person, Measure measure){
@@ -51,26 +50,29 @@ public class PersonService {
 			throw new FatFastException(e);
 		}
 	}
-
-	public Boolean addMeasures(Person person) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 	// setters and getters
 
 	/**
 	 * @return the personRepository
 	 */
-	public PersonJpaRepository getPersonRepository() {
+	public PersonRepository getPersonRepository() {
 		return personRepository;
 	}
 
 	/**
 	 * @param personRepository the personRepository to set
 	 */
-	public void setPersonRepository(PersonJpaRepository personRepository) {
+	public void setPersonRepository(PersonRepository personRepository) {
 		this.personRepository = personRepository;
+	}
+
+	public PersonDto getPerson(Long id) {
+		return this.personRepository.getPerson(id);
+	}
+
+	public boolean addMeasure(long id, Long weight, Date date) {
+		return this.personRepository.addMeasure(id, weight, date);
 	}
 	
 }
