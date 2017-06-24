@@ -4,11 +4,12 @@ package ar.com.reduceFatFast.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 
 import org.springframework.beans.factory.annotation.Value;
 
@@ -24,7 +25,7 @@ public @Data class Dia {
 	@Value("${modelo.cantidadComidasPorDia}")
 	private Integer cantidadComidasPorDia;
 
-	@OneToMany
+	@ManyToMany(cascade = CascadeType.PERSIST)
 	private List<Comida> comidas;
 	
 	public Dia() {

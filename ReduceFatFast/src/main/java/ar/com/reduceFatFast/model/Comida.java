@@ -3,12 +3,16 @@ package ar.com.reduceFatFast.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.Version;
 
 import lombok.Data;
 
@@ -17,21 +21,30 @@ public @Data class Comida {
 	
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
+	@Version
+	private int version;
 	private String nombre;
-	@OneToMany
-	private List<IngredienteComida> ingredientes = new ArrayList<IngredienteComida>(); //TODO: Donde incluir la cantidad??
 	
-	protected Comida(){}
+	private long cantidadCalorias;
+	
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    @JoinColumn(name="COMIDA_ID")
+	private List<Ingrediente> ingredientes = new ArrayList<Ingrediente>();
+	
+	protected Comida(){
+		this.setCantidadCalorias(0);
+	}
 	
 	public Comida(String nombre) {
 		super();
 		this.nombre = nombre;
-		this.ingredientes = new ArrayList<>();
+		this.setIngredientes(new ArrayList<Ingrediente>());
 	}
 
-	public void agregarIngrediente (Ingrediente unIngrediente, int unaCantidad, String unaUnidad){
-		IngredienteComida ingredienteComida = new IngredienteComida(unIngrediente, unaCantidad, unaUnidad);
-		ingredientes.add(ingredienteComida);
+	public void agregarIngrediente (String nombre, Integer cantidad, String unidad){
+		Ingrediente ingrediente = new Ingrediente(nombre, cantidad, unidad);
+		//ingrediente.setComida(this);
+		this.getIngredientes().add(ingrediente);
 	}
 	
 	public enum ComidaDelDia {

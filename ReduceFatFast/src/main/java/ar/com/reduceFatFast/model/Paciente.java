@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -17,14 +18,14 @@ import lombok.Data;
 public @Data class Paciente extends Usuario {
 
 	@ManyToMany
-	private Set<Comida> comidas = new HashSet<Comida>();
-	//private Set<Ingrediente> ingredientes = new HashSet<Ingrediente>();
+	private Set<Comida> comidas;
+
 	@ManyToOne
+    @JoinColumn(name="troop_fk")
 	public Grupo grupo;
 	
 	public Paciente(String nombre, int dni) {
 		super(nombre, dni);
-		// TODO Auto-generated constructor stub
 	}
 	
 	public void setGrupo (Grupo unGrupo)
@@ -36,19 +37,18 @@ public @Data class Paciente extends Usuario {
 		return grupo;
 	}
 
-	public void agregarIngrediente(Ingrediente unIngrediente, int unaCantidad,String unaUnidad, Comida unaComida ){
-		unaComida.agregarIngrediente(unIngrediente, unaCantidad, unaUnidad);
+	public void agregarIngrediente(String nombre, int unaCantidad,String unaUnidad, Comida unaComida ){
+		unaComida.agregarIngrediente(nombre, unaCantidad, unaUnidad);
 	}
 
-	public Ingrediente crearIngrediente(String aName, int calorias){
-		Ingrediente unIngrediente = new Ingrediente (aName, calorias);
+	public Ingrediente crearIngrediente(String aName, int calorias, String unidad){
+		Ingrediente unIngrediente = new Ingrediente (aName, calorias, unidad);
 		return(unIngrediente);
 	}
 	
 	public Comida crearComida(String aName){
 		Comida unaComida = new Comida (aName);
 		return(unaComida);
-		//comidas.add(unaComida);
 	}
 	
 	public void agregarComida (Comida unaComida, Integer numeroDeDia, ComidaDelDia comidaDelDia ){

@@ -29,22 +29,22 @@ public class AgregarComidaTest {
 		
 		//Creacion de ingredientes y comida
 		//TODO: habr� un registro de las comidas creadas o se guardan solamente en la comida del dia?
-		Ingrediente ingrediente1 = paciente1.crearIngrediente("Harina", 100);
-		Ingrediente ingrediente2 = paciente1.crearIngrediente("Leche", 50);
+		Ingrediente ingrediente1 = paciente1.crearIngrediente("Harina", 100, "cucharadas");
+		Ingrediente ingrediente2 = paciente1.crearIngrediente("Leche", 50, "cm3");
 		Comida comida1 = paciente1.crearComida("Torta");
 		
-		Ingrediente ingrediente3 = paciente2.crearIngrediente("Azucar", 50);
-		Ingrediente ingrediente4 = paciente2.crearIngrediente("Colores", 500);
+		Ingrediente ingrediente3 = paciente2.crearIngrediente("Azucar", 50, "cucharadas tamaño cafe");
+		Ingrediente ingrediente4 = paciente2.crearIngrediente("Colores", 500, "medida de colores?");
 		Comida comida2 = paciente1.crearComida("ChicaSP");
 		
 		
 		//Se agregan los ingredientes a la comida y la comida a una comida del dia
-		paciente1.agregarIngrediente(ingrediente1, 100, "gr", comida1);
-		paciente1.agregarIngrediente(ingrediente2, 250, "cc", comida1);
+		paciente1.agregarIngrediente("ingrediente1", 100, "gr", comida1);
+		paciente1.agregarIngrediente("ingrediente2", 250, "cc", comida1);
 		paciente1.agregarComida(comida1, 1, Comida.ComidaDelDia.ALMUERZO);
 		
-		paciente2.agregarIngrediente(ingrediente3, 1, "cucharada", comida2);
-		paciente2.agregarIngrediente(ingrediente4, 300, "gr", comida2);
+		paciente2.agregarIngrediente("ingrediente3", 1, "cucharada", comida2);
+		paciente2.agregarIngrediente("ingrediente4", 300, "gr", comida2);
 		paciente2.agregarComida(comida2, 1, ComidaDelDia.DESAYUNO);
 		
 		//--- Impresion de valores ---
@@ -57,7 +57,7 @@ public class AgregarComidaTest {
 			{
 				//unGrupo.getDietaSemanal().getDia(i).getComida(j).getNombre();
 				System.out.println("  Comida:"+(j+1)+" "+unGrupo.getDietaSemanal().getDia(i).getComida(j).getNombre());
-				unGrupo.getDietaSemanal().getDia(j).getComida(j).getIngredientes().forEach(ingredienteL->System.out.println("    "+ingredienteL.getIngrediente().getName()+" "+ingredienteL.getCantidad()+ingredienteL.getUnidad()));
+				unGrupo.getDietaSemanal().getDia(j).getComida(j).getIngredientes().forEach(ingredienteL->System.out.println("    "+ingredienteL.getName()+" "+ingredienteL.getCantidad()+ingredienteL.getUnidad()));
 			}
 		}
 		

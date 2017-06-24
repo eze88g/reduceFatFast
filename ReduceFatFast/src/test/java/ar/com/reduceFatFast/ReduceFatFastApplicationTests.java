@@ -1,6 +1,5 @@
 package ar.com.reduceFatFast;
 
-import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Hibernate;
@@ -16,8 +15,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import ar.com.reduceFatFast.model.Comida;
 import ar.com.reduceFatFast.model.Grupo;
-import ar.com.reduceFatFast.model.Ingrediente;
-import ar.com.reduceFatFast.model.IngredienteComida;
 import ar.com.reduceFatFast.model.Nutricionista;
 import ar.com.reduceFatFast.model.Paciente;
 import ar.com.reduceFatFast.model.Sistema;
@@ -50,8 +47,6 @@ public class ReduceFatFastApplicationTests {
 			Hibernate.initialize(sistema.getComidas());
 			
 			logger.info("Agrego una comida y guardo");
-			Ingrediente ingrediente = new Ingrediente("Azucar",100);
-			IngredienteComida ingredienteComida = new IngredienteComida(ingrediente, 1, "cucharadas de cafe");
 			Comida comida = new Comida("Cafe");
 			sistema.getComidas().add(comida);
 			repository.save(sistema);

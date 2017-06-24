@@ -14,7 +14,7 @@ import lombok.Data;
 @DiscriminatorColumn(name="USER_TYPE")
 @Table(name="USUARIO")
 @Entity
-public @Data class Usuario {
+public abstract @Data class Usuario {
 	
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;

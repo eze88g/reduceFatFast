@@ -1,9 +1,13 @@
 package ar.com.reduceFatFast.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import lombok.Data;
 
@@ -11,13 +15,16 @@ import lombok.Data;
 public @Data class Ingrediente {
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
-	String name ;
-	int calorias;
+	private String name ;
+	private Integer cantidad;
+	private String unidad;
+	//private Comida comida;
 	
-	public Ingrediente(String name, int calorias) {
+	public Ingrediente(String name, int cantidad, String unidad) {
 		super();
 		this.name = name;
-		this.calorias = calorias;
+		this.setCantidad(cantidad);
+		this.setUnidad(unidad);
 	}
 	
 	protected Ingrediente(){}
