@@ -1,6 +1,5 @@
 package ar.com.reduceFatFast.model;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.DiscriminatorColumn;
@@ -8,8 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-
 import ar.com.reduceFatFast.model.Comida.ComidaDelDia;
 import lombok.Data;
 
@@ -24,8 +21,8 @@ public @Data class Paciente extends Usuario {
     @JoinColumn(name="troop_fk")
 	public Grupo grupo;
 	
-	public Paciente(String nombre, int dni) {
-		super(nombre, dni);
+	public Paciente(String nombre, int dni, Sistema sistema) {
+		super(nombre, dni, sistema);
 	}
 	
 	public void setGrupo (Grupo unGrupo)
@@ -41,13 +38,14 @@ public @Data class Paciente extends Usuario {
 		unaComida.agregarIngrediente(nombre, unaCantidad, unaUnidad);
 	}
 
-	public Ingrediente crearIngrediente(String aName, int calorias, String unidad){
-		Ingrediente unIngrediente = new Ingrediente (aName, calorias, unidad);
+	public Ingrediente crearIngrediente(String aName,int cantidad, String unidad){
+		Ingrediente unIngrediente = new Ingrediente (aName, cantidad, unidad);
 		return(unIngrediente);
 	}
 	
 	public Comida crearComida(String aName){
 		Comida unaComida = new Comida (aName);
+		this.sistema.agregarComida(unaComida);
 		return(unaComida);
 	}
 	

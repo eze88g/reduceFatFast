@@ -2,13 +2,9 @@ package ar.com.reduceFatFast.model;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,4 +32,9 @@ public @Data class Sistema {
 		this.setUsuarios(new ArrayList<Usuario>());
 		this.setGrupos(new ArrayList<Grupo>());
 	}
+	
+	void agregarComida (Comida unaComida){
+		comidas.add(unaComida);
+	}
+	
 }

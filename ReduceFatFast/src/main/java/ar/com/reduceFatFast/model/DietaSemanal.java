@@ -27,14 +27,9 @@ public @Data class DietaSemanal {
 	public List<Dia> dias;
 	
 	public void agregarComida (Comida unaComida, Integer numeroDeDia, ComidaDelDia comidaDelDia){
-		if(this.dias.get(numeroDeDia) != null){
 			Dia selected = dias.get(numeroDeDia);
 			selected.setComida(comidaDelDia, unaComida);
-			this.dias.set(numeroDeDia, selected);
-		}else{
-			dias.set(numeroDeDia, new Dia(comidaDelDia, unaComida));
-		}
-		
+			//this.dias.set(numeroDeDia, selected);
 	}
 	
 	public void agregarDia(Dia dia, Integer pos){
@@ -51,6 +46,10 @@ public @Data class DietaSemanal {
 	
 	public DietaSemanal(){
 		this.setDias(new ArrayList<Dia>());
+		for (int i = 0 ; i<7 ; i++)
+		{
+			dias.add(new Dia());
+		}
 	}
 	
 }

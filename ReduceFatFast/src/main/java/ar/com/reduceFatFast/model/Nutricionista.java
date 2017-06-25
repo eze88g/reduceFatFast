@@ -1,5 +1,6 @@
 package ar.com.reduceFatFast.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.DiscriminatorColumn;
@@ -13,15 +14,20 @@ import lombok.Data;
 public @Data class Nutricionista extends Usuario {
 	
 	@OneToMany(mappedBy="nutricionista")
-	private List<Grupo> grupo;
+	private List<Grupo> grupos;
 	
 	protected Nutricionista(){}
 	
-	public Nutricionista(String nombre, int dni, GestorDeUsuario gestor) {
-		super(nombre, dni);
+	public Nutricionista(String nombre, int dni, Sistema sistema) {
+		super(nombre, dni, sistema);
+		this.setGrupos(new ArrayList<Grupo>());
 	}
 
-	public void crearGrupo(){
+	public Grupo crearGrupo(String unNombre){
+		
+		Grupo unGrupo = new Grupo (this,unNombre);
+		grupos.add(unGrupo);
+		return unGrupo;
 	}
 	
 	//Hay que implemtentar la b'usqueda del paciente
@@ -31,12 +37,12 @@ public @Data class Nutricionista extends Usuario {
 		//Paciente paciente = gestor.buscarPaciente(dni);
 //		this.getGrupo().get(0).agregarPaciente(paciente);
 	}
-
+/*
 	public void validarDieta()
 	{
 		// TODO: Fix this method
 		DietaSemanal dieta = this.getGrupo().get(0).getDietaSemanal();
 		dieta.setValidacion(true);
 	}
-
+*/
 }

@@ -1,5 +1,6 @@
 package ar.com.reduceFatFast.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -25,11 +26,14 @@ public @Data class Grupo {
 	private Nutricionista nutricionista;
 	@ManyToOne
 	private DietaSemanal dietaSemanal;
+	private String nombre ;
 
 	
-	public Grupo(Nutricionista nutricionista) {
+	public Grupo(Nutricionista nutricionista, String unNombre) {
 		this.setNutricionista(nutricionista);
 		this.setDietaSemanal(new DietaSemanal());
+		this.setNombre(unNombre);
+		this.setPacientes(new ArrayList<Paciente>());
 	}
 	
 	public void agregarPaciente(Paciente unPaciente){

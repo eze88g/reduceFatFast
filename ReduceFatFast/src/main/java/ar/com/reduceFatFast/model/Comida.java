@@ -43,7 +43,6 @@ public @Data class Comida {
 
 	public void agregarIngrediente (String nombre, Integer cantidad, String unidad){
 		Ingrediente ingrediente = new Ingrediente(nombre, cantidad, unidad);
-		//ingrediente.setComida(this);
 		this.getIngredientes().add(ingrediente);
 	}
 	

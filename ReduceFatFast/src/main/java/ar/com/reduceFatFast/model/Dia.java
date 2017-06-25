@@ -30,6 +30,9 @@ public @Data class Dia {
 	
 	public Dia() {
 		this.setComidas(new ArrayList<Comida>());
+		for (int i=0; i<4; i++){
+			comidas.add(new Comida());
+		}
 	}
 
 	public Dia(ComidaDelDia comidaDelDia, Comida unaComida) {
@@ -41,6 +44,29 @@ public @Data class Dia {
 		return ((ArrayList<Comida>)this.getComidas()).get(n);
 	}
 
+	public Comida getComida(ComidaDelDia comidaDelDia) {
+		int n ;
+		switch(comidaDelDia) {
+		case DESAYUNO :
+			n = 1;
+			break; // optional
+		case ALMUERZO :
+			n = 2;
+			break; // optional
+		case MERIENDA :
+			n = 3;
+			break; // optional
+		case CENA :
+			n = 4;
+			break; // optional
+			// You can have any number of case statements.
+		default : // Optional
+			n = 0;
+		}
+		return (this.getComidas().get(n));
+	}
+	
+	
 	public void setComida(ComidaDelDia comidaDelDia, Comida unaComida) {
 		int n ;
 		switch(comidaDelDia) {

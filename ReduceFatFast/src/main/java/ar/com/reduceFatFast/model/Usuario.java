@@ -20,13 +20,16 @@ public abstract @Data class Usuario {
 	private long id;
 	String nombre;
 	int dni;
+	Sistema sistema;
 	
 	protected Usuario(){}
 	
-	public Usuario(String nombre, int dni) {
+	public Usuario(String nombre, int dni, Sistema sistema) {
 		super();
 		this.nombre = nombre;
 		this.dni = dni;
+		this.sistema = sistema;
+		
 	}
 
 	public String getNombre() {

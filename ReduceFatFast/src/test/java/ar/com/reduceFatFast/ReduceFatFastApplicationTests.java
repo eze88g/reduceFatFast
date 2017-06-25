@@ -52,7 +52,7 @@ public class ReduceFatFastApplicationTests {
 			repository.save(sistema);
 			
 			logger.info("Agrego un usuario y guardo");
-			Paciente paciente = new Paciente("Lebron", 30156142);
+			Paciente paciente = new Paciente("Lebron", 30156142,sistema);
 			Nutricionista nutricionista = new Nutricionista("Samanta", 30156181, null);
 			sistema.getUsuarios().add(paciente);
 			sistema.getUsuarios().add(nutricionista);
@@ -60,7 +60,7 @@ public class ReduceFatFastApplicationTests {
 			Assert.assertEquals(sistema.getUsuarios().size(), repository.findOne(sistema.getId()).getUsuarios().size());
 
 			logger.info("Agrego un grupo y guardo");
-			Grupo grupo = new Grupo(nutricionista);
+			Grupo grupo = new Grupo(nutricionista,"Gorditos");
 			sistema.getGrupos().add(grupo);
 			repository.save(sistema);
 			Assert.assertEquals(sistema.getGrupos().size(), repository.findOne(sistema.getId()).getGrupos().size());
