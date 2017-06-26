@@ -2,14 +2,19 @@ package ar.com.reduceFatFast.model;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.MapKey;
+import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -26,13 +31,16 @@ public @Data class Dia {
 	private long version;
 	@Value("${modelo.cantidadComidasPorDia}")
 	private Integer cantidadComidasPorDia;
-	@ManyToMany(cascade = CascadeType.PERSIST)
-	private List<Comida> comidas;
+//	@ManyToMany(cascade = CascadeType.PERSIST)
+//	private List<Comida> comidas;
+	@ManyToMany(cascade=CascadeType.PERSIST) @JoinColumn(name="id") @MapKey(name="id")
+	private Map<Integer,Comida> comidas;
 	
 	public Dia() {
-		this.setComidas(new ArrayList<Comida>());
+		//this.setComidas(new ArrayList<Comida>());
+		this.setComidas(new HashMap<Integer,Comida>());
 //		for (int i=0; i<4; i++){
-//			comidas.add(new Comida());
+//			comidas.add(null);
 //		}
 	}
 
@@ -49,16 +57,16 @@ public @Data class Dia {
 		int n ;
 		switch(comidaDelDia) {
 		case DESAYUNO :
-			n = 1;
+			n = 0;
 			break; // optional
 		case ALMUERZO :
-			n = 2;
+			n = 1;
 			break; // optional
 		case MERIENDA :
-			n = 3;
+			n = 2;
 			break; // optional
 		case CENA :
-			n = 4;
+			n = 3;
 			break; // optional
 			// You can have any number of case statements.
 		default : // Optional
@@ -72,22 +80,22 @@ public @Data class Dia {
 		int n ;
 		switch(comidaDelDia) {
 		case DESAYUNO :
-			n = 1;
+			n = 0;
 			break; // optional
 		case ALMUERZO :
-			n = 2;
+			n = 1;
 			break; // optional
 		case MERIENDA :
-			n = 3;
+			n = 2;
 			break; // optional
 		case CENA :
-			n = 4;
+			n = 3;
 			break; // optional
 			// You can have any number of case statements.
 		default : // Optional
 			n = 0;
 		}
-		this.getComidas().set(n, unaComida);
+		this.getComidas().put(n, unaComida);
 	}
 }
 

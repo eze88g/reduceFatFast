@@ -27,8 +27,8 @@ public @Data class DiaDto {
 		this.setCantidadComidasPorDia(dia.getCantidadComidasPorDia());
 		this.setComidas(new ArrayList<ComidaDto>());
 		
-		for(Comida each : dia.getComidas()) {
-			this.getComidas().add(new ComidaDto(each));
-		}
+//		for(Comida each : dia.getComidas()) {
+//			this.getComidas().add(new ComidaDto(each));
+//		}
 	}
 }

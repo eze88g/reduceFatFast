@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.com.reduceFatFast.model.Comida;
+import ar.com.reduceFatFast.model.Comida.ComidaDelDia;
 import ar.com.reduceFatFast.model.Dia;
 import ar.com.reduceFatFast.model.DietaSemanal;
 import ar.com.reduceFatFast.model.Grupo;
@@ -64,10 +65,10 @@ public class TestController {
 	public Dia crearDia(){
 		Dia dia = new Dia();
 		List<Comida> comidas = this.getComidas();
-		dia.getComidas().add(comidas.get(0));
-		dia.getComidas().add(comidas.get(0));
-		dia.getComidas().add(comidas.get(0));
-		dia.getComidas().add(comidas.get(0));
+		dia.getComidas().put(0, comidas.get(0));
+		dia.getComidas().put(1, comidas.get(0));
+		dia.getComidas().put(2, comidas.get(0));
+		dia.getComidas().put(3, comidas.get(0));
 		
 		this.getService().add(dia);
 		
@@ -87,10 +88,8 @@ public class TestController {
 		Dia dia;
 		for (int i=0; i<7; i++) {
 			dia = new Dia();
-			dia.setCantidadComidasPorDia(4);
-			for (int j=0; j<4; j++) {	
-				dia.getComidas().add(comidas.get(0));
-			}
+			dia.setCantidadComidasPorDia(4);	
+			dia.setComida(ComidaDelDia.ALMUERZO, comidas.get(0));
 			dias.add(dia);
 		}
 		dieta.agregarDias(dias);
@@ -132,7 +131,10 @@ public class TestController {
 	
 	@RequestMapping("/getGrupos")
 	public List<Grupo> getGrupos(){
-		return this.getService().getGrupos();
+		List<Grupo> grupos = this.getService().getGrupos();
+		logger.debug(grupos.get(0).getDietaSemanal().toString());
+		logger.debug(grupos.get(0).getDietaSemanal().getDias().toString());	
+		return grupos;
 	}
 	
 	@RequestMapping("/crearNutricionista")

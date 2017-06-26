@@ -48,10 +48,10 @@ public @Data class DietaSemanal {
 	
 	public DietaSemanal(){
 		this.setDias(new ArrayList<Dia>());
-		for (int i = 0 ; i<7 ; i++)
-		{
-			dias.add(new Dia());
-		}
+//		for (int i = 0 ; i<7 ; i++)
+//		{
+//			dias.add(new Dia());
+//		}
 	}
 	
 }
