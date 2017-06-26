@@ -3,8 +3,12 @@ package ar.com.reduceFatFast.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import lombok.Data;
@@ -12,7 +16,6 @@ import lombok.Data;
 @DiscriminatorColumn(name="NUTRICIONISTA")
 @Entity
 public @Data class Nutricionista extends Usuario {
-	
 	@OneToMany(mappedBy="nutricionista")
 	private List<Grupo> grupos;
 	
@@ -41,7 +44,7 @@ public @Data class Nutricionista extends Usuario {
 	public void validarDieta()
 	{
 		// TODO: Fix this method
-		DietaSemanal dieta = this.getGrupo().get(0).getDietaSemanal();
+		DietaSemanal dieta = this.getGrupos().get(0).getDietaSemanal();
 		dieta.setValidacion(true);
 	}
 */

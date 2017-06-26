@@ -16,7 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 import ar.com.reduceFatFast.model.Comida;
 import ar.com.reduceFatFast.model.Dia;
 import ar.com.reduceFatFast.model.DietaSemanal;
+import ar.com.reduceFatFast.model.Grupo;
 import ar.com.reduceFatFast.model.Ingrediente;
+import ar.com.reduceFatFast.model.Nutricionista;
+import ar.com.reduceFatFast.model.Paciente;
+import ar.com.reduceFatFast.model.Sistema;
 import ar.com.reduceFatFast.service.TestService;
 
 /**
@@ -97,6 +101,57 @@ public class TestController {
 	@RequestMapping("/getDietas")
 	public List<DietaSemanal> getDietas(){
 		return this.getService().getDietas();
+	}
+	
+	@RequestMapping("/crearGrupo")
+	public Grupo crearGrupo(){
+		// lo basico para crear el grupo, reutilizo los anteriores controllers
+		this.crearComida();
+		this.addDieta();
+		this.crearNutricionista();
+		Nutricionista nutricionista = this.getService().getNutricionistas().get(0);
+		Grupo grupo = new Grupo(nutricionista,"Gordos Anonimos");
+		grupo.setNutricionista(nutricionista);
+		DietaSemanal dieta = this.getDietas().get(0);
+		grupo.setDietaSemanal(dieta);
+		this.getService().add(grupo);
+		return grupo;
+	}
+	
+	
+	
+	@RequestMapping("/agregarPaciente")
+	public Grupo crearPaciente(){
+		Paciente paciente = new Paciente("Sancho Panza", 11111111, null);
+		Nutricionista nutricionista = this.getService().getNutricionistas().get(0);
+		nutricionista.getGrupos().get(0).agregarPaciente(paciente);
+		this.getService().add(nutricionista.getGrupos().get(0));
+		
+		return nutricionista.getGrupos().get(0);
+	}
+	
+	@RequestMapping("/getGrupos")
+	public List<Grupo> getGrupos(){
+		return this.getService().getGrupos();
+	}
+	
+	@RequestMapping("/crearNutricionista")
+	public Nutricionista crearNutricionista(){
+		Nutricionista nutricionista = new Nutricionista("Lavar Ball", 33333333,null);
+		this.getService().add(nutricionista);
+		return nutricionista;
+		
+	}
+	
+	@RequestMapping("/getNutricionistas")
+	public List<Nutricionista> getNutricionista(){
+		return this.getService().getNutricionistas();
+		
+	}
+	
+	@RequestMapping("/actualizarSistema")
+	public Sistema actualizarSistema(){
+		return this.getService().actualizarSistema();
 	}
 
 	/**

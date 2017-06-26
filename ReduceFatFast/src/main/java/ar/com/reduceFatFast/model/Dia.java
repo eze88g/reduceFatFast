@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.Version;
 
 import org.springframework.beans.factory.annotation.Value;
 
@@ -21,18 +22,18 @@ public @Data class Dia {
 	
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
-
+	@Version
+	private long version;
 	@Value("${modelo.cantidadComidasPorDia}")
 	private Integer cantidadComidasPorDia;
-
 	@ManyToMany(cascade = CascadeType.PERSIST)
 	private List<Comida> comidas;
 	
 	public Dia() {
 		this.setComidas(new ArrayList<Comida>());
-		for (int i=0; i<4; i++){
-			comidas.add(new Comida());
-		}
+//		for (int i=0; i<4; i++){
+//			comidas.add(new Comida());
+//		}
 	}
 
 	public Dia(ComidaDelDia comidaDelDia, Comida unaComida) {

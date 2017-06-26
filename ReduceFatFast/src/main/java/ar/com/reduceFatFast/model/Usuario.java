@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 import lombok.Data;
 
@@ -19,10 +20,12 @@ public abstract @Data class Usuario {
 	
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
-	String nombre;
-	int dni;
 	@ManyToOne
 	private Sistema sistema;
+	@Version
+	private long version;
+	private String nombre;
+	private int dni;
 	
 	protected Usuario(){}
 	

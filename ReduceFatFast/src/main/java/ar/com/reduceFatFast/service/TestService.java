@@ -13,11 +13,19 @@ import org.springframework.stereotype.Service;
 import ar.com.reduceFatFast.model.Comida;
 import ar.com.reduceFatFast.model.Dia;
 import ar.com.reduceFatFast.model.DietaSemanal;
+import ar.com.reduceFatFast.model.Grupo;
 import ar.com.reduceFatFast.model.Ingrediente;
+import ar.com.reduceFatFast.model.Nutricionista;
+import ar.com.reduceFatFast.model.Sistema;
+import ar.com.reduceFatFast.model.Usuario;
 import ar.com.reduceFatFast.repository.ComidaRepository;
 import ar.com.reduceFatFast.repository.DiaRepository;
 import ar.com.reduceFatFast.repository.DietaSemanalRepository;
+import ar.com.reduceFatFast.repository.GrupoRepository;
 import ar.com.reduceFatFast.repository.IngredienteRepository;
+import ar.com.reduceFatFast.repository.NutricionistaRepository;
+import ar.com.reduceFatFast.repository.SistemaRepository;
+import ar.com.reduceFatFast.repository.UsuarioRepository;
 import lombok.Data;
 
 /**
@@ -36,6 +44,14 @@ public @Data class TestService {
 	private DiaRepository diaRepository;
 	@Autowired
 	private DietaSemanalRepository dietaRepository;
+	@Autowired
+	private NutricionistaRepository nutricionistaRepository;
+	@Autowired
+	private GrupoRepository grupoRepository;
+	@Autowired
+	private SistemaRepository sistemaRepository;
+	@Autowired
+	private UsuarioRepository usuarioRepository;
 	
 	private GeneralRepository repository;
 
@@ -81,5 +97,34 @@ public @Data class TestService {
 	
 	public List<DietaSemanal> getDietas() {
 		return (List<DietaSemanal>) this.getDietaRepository().findAll();	
+	}
+
+	public void add(Nutricionista nutricionista) {
+		this.getNutricionistaRepository().save(nutricionista);
+		
+	}
+	
+	public List<Nutricionista> getNutricionistas(){
+		return (List<Nutricionista>) this.getNutricionistaRepository().findAll();
+	}
+
+	public void add(Grupo grupo) {
+		this.getGrupoRepository().save(grupo);		
+	}
+	
+	public List<Grupo> getGrupos(){
+		return (List<Grupo>) this.getGrupoRepository().findAll();
+	}
+
+	public Sistema actualizarSistema() {
+		Sistema sistema = this.getSistemaRepository().findOne(1l);
+		List<Comida> comidas = this.getAllComidas();
+		List<Usuario> usuarios = (List<Usuario>) this.getUsuarioRepository().findAll();
+		List<Grupo> grupos = (List<Grupo>) this.getGrupoRepository().findAll();
+		sistema.getComidas().addAll(comidas);
+		sistema.getGrupos().addAll(grupos);
+		sistema.getUsuarios().addAll(usuarios);
+		this.getSistemaRepository().save(sistema);
+		return sistema;
 	}
 }

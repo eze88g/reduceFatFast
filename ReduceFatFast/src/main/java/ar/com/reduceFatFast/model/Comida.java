@@ -23,10 +23,8 @@ public @Data class Comida {
 	private long id;
 	@Version
 	private int version;
-	private String nombre;
-	
-	private long cantidadCalorias;
-	
+	private String nombre;	
+	private long cantidadCalorias;	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
     @JoinColumn(name="COMIDA_ID")
 	private List<Ingrediente> ingredientes = new ArrayList<Ingrediente>();

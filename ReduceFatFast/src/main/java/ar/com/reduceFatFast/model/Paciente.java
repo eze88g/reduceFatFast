@@ -4,9 +4,10 @@ import java.util.Set;
 
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import ar.com.reduceFatFast.model.Comida.ComidaDelDia;
 import lombok.Data;
@@ -17,13 +18,16 @@ public @Data class Paciente extends Usuario {
 
 	@ManyToMany
 	private Set<Comida> comidas;
-
+	@JsonIgnore
 	@ManyToOne
-    @JoinColumn(name="troop_fk")
 	public Grupo grupo;
 	
 	public Paciente(String nombre, int dni, Sistema sistema) {
 		super(nombre, dni, sistema);
+	}
+	
+	public Paciente() {
+		super();
 	}
 	
 	public void setGrupo (Grupo unGrupo)

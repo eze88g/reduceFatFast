@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Version;
 
 import lombok.Data;
 
@@ -11,10 +12,11 @@ import lombok.Data;
 public @Data class Ingrediente {
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
+	@Version
+	private long version;
 	private String name ;
 	private Integer cantidad;
 	private String unidad;
-	//private Comida comida;
 	
 	public Ingrediente(String name, int cantidad, String unidad) {
 		super();

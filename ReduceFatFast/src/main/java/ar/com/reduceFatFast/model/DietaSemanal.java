@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.Version;
 
 import ar.com.reduceFatFast.model.Comida.ComidaDelDia;
 import lombok.Data;
@@ -20,7 +21,8 @@ public @Data class DietaSemanal {
 	
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
-	
+	@Version
+	private long version;
 	public boolean validacion;
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
     @JoinColumn(name="DIETA_ID")
