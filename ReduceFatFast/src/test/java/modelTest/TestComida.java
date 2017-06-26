@@ -9,7 +9,7 @@ import ar.com.reduceFatFast.model.Comida;
 import ar.com.reduceFatFast.model.Paciente;
 import ar.com.reduceFatFast.model.Sistema;
 
-public class CrearComida {
+public class TestComida {
 	
 	Sistema sistema;
 	Paciente paciente;

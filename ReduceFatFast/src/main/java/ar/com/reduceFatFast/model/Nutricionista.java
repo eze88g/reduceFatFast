@@ -1,5 +1,7 @@
 package ar.com.reduceFatFast.model;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,10 +25,35 @@ public @Data class Nutricionista extends Usuario {
 		this.setGrupos(new ArrayList<Grupo>());
 	}
 
+	public Grupo buscarGrupo (String unNombre){
+		Grupo grupo = null;
+		for (int i=0;i<grupos.size();i++){
+			if (unNombre == grupos.get(i).getNombre()){
+				grupo = grupos.get(i);
+			}
+		}
+		return grupo;
+	}
+	
+	public boolean borrarGrupo (Grupo unGrupo){
+		if ( grupos.contains(unGrupo) ){
+			grupos.remove(unGrupo);
+			sistema.borrarGrupo(unGrupo);
+			return true;
+		}
+		else 
+			return false;
+	}
+	
 	public Grupo crearGrupo(String unNombre){
-		
+		for (int i=0;i<grupos.size();i++){
+			if (unNombre == grupos.get(i).getNombre()){
+				return null;
+			}
+		}
 		Grupo unGrupo = new Grupo (this,unNombre);
 		grupos.add(unGrupo);
+		sistema.agregarGrupo(unGrupo);
 		return unGrupo;
 	}
 	
