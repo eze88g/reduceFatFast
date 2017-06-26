@@ -21,7 +21,7 @@ public abstract @Data class Usuario {
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	@ManyToOne
-	private Sistema sistema;
+	protected Sistema sistema;
 	@Version
 	private long version;
 	private String nombre;
