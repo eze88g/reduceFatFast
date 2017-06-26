@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -20,7 +21,8 @@ public abstract @Data class Usuario {
 	private long id;
 	String nombre;
 	int dni;
-	Sistema sistema;
+	@ManyToOne
+	private Sistema sistema;
 	
 	protected Usuario(){}
 	
