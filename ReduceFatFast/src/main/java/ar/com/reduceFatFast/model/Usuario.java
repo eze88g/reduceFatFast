@@ -22,7 +22,7 @@ public abstract @Data class Usuario {
 	String nombre;
 	int dni;
 	@ManyToOne
-	private Sistema sistema;
+	protected Sistema sistema;
 	
 	protected Usuario(){}
 	
