@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+
 import ar.com.reduceFatFast.model.Comida.ComidaDelDia;
 import lombok.Data;
 
@@ -45,7 +46,7 @@ public @Data class Paciente extends Usuario {
 	
 	public Comida crearComida(String aName){
 		Comida unaComida = new Comida (aName);
-		this.sistema.agregarComida(unaComida);
+		this.getSistema().agregarComida(unaComida);
 		return(unaComida);
 	}
 	
