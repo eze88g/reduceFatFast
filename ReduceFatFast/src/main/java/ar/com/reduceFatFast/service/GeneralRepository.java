@@ -5,12 +5,7 @@ package ar.com.reduceFatFast.service;
 
 import java.util.HashMap;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
-
-import ar.com.reduceFatFast.repository.ComidaRepository;
-import ar.com.reduceFatFast.repository.DiaRepository;
-import ar.com.reduceFatFast.repository.IngredienteRepository;
 
 /**
  * @author joaco

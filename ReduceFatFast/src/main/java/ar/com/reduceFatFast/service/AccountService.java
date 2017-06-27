@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 
 import ar.com.reduceFatFast.model.UserAccount;
-import ar.com.reduceFatFast.repository.AccountRepository;
 import ar.com.reduceFatFast.repository.jpa.AccountJpaRepository;
 
 /**

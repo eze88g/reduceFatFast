@@ -30,7 +30,7 @@ public @Data class Grupo {
 	private Nutricionista nutricionista;
 	@ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private DietaSemanal dietaSemanal;
-	private String nombre ;
+	private String nombre;
 
 	protected Grupo(){}
 	

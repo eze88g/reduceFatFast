@@ -3,6 +3,8 @@
  */
 package ar.com.reduceFatFast.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import ar.com.reduceFatFast.dto.ComidaDto;
+import ar.com.reduceFatFast.dto.IngredienteDto;
 import ar.com.reduceFatFast.service.ComidaService;
 
 /**
@@ -34,11 +38,37 @@ public class ComidaController {
 	}
  
     @RequestMapping(path="/comidas", method = RequestMethod.POST)
-    public ResponseEntity<String> crearComida(int idUsuario, String nombre){
-    	if (this.getComidaService().crearComida(idUsuario, nombre)) {
+    public ResponseEntity<String> crearComida(int idUsuario, String nombre, long cantidadCalorias){
+    	if (this.getComidaService().crearComida(idUsuario, nombre, cantidadCalorias)) {
     		return new ResponseEntity<>(HttpStatus.OK);
     	} else {
     		return new ResponseEntity<>("Comida no creada", HttpStatus.CONFLICT);
+    	}
+    }
+    
+    @RequestMapping(path="/comidas", method = RequestMethod.GET)
+    public ResponseEntity<List<ComidaDto>> listarComidas(){
+    	
+    	List<ComidaDto> result = this.getComidaService().listarComidas();
+    	
+    	return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @RequestMapping(path="/comidas/{idComida}", method = RequestMethod.PUT)
+    public ResponseEntity<String> editarComida(@PathVariable("idComida") long idComida,int idUsuario, String nombre, long cantidadCalorias){
+    	if (this.getComidaService().editarComida(idComida, idUsuario, nombre, cantidadCalorias)) {
+    		return new ResponseEntity<>(HttpStatus.OK);
+    	} else {
+    		return new ResponseEntity<>("Comida no editada", HttpStatus.CONFLICT);
+    	}
+    }
+    
+    @RequestMapping(path="/comidas/{idComida}", method = RequestMethod.DELETE)
+    public ResponseEntity<String> editarComida(@PathVariable("idComida") long idComida){
+    	if (this.getComidaService().eliminarComida(idComida)) {
+    		return new ResponseEntity<>(HttpStatus.OK);
+    	} else {
+    		return new ResponseEntity<>("Comida no eliminada", HttpStatus.CONFLICT);
     	}
     }
     
@@ -48,6 +78,45 @@ public class ComidaController {
     		return new ResponseEntity<>(HttpStatus.OK);
     	} else {
     		return new ResponseEntity<>("Ingrediente no agregado", HttpStatus.CONFLICT);
+    	}
+    }
+    
+    @RequestMapping(path="/comidas/{idComida}/ingredientes", method = RequestMethod.GET)
+    public ResponseEntity<List<IngredienteDto>> listarIngredientes(@PathVariable("idComida") long idComida){
+    	
+    	List<IngredienteDto> result = this.getComidaService().listarIngredientes(idComida); 
+    	
+    	return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+    
+    @RequestMapping(path="/comidas/{idComida}/ingredientes/{idIngrediente}", method = RequestMethod.GET)
+    public ResponseEntity<IngredienteDto> listarIngredientes(@PathVariable("idComida") long idComida, 
+    		@PathVariable("idIngrediente") long idIngrediente){
+    	
+    	IngredienteDto result = this.getComidaService().obtenerIngrediente(idComida, idIngrediente); 
+    	
+    	return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+    
+    @RequestMapping(path="/comidas/{idComida}/ingredientes/{idIngrediente}", method = RequestMethod.DELETE)
+    public ResponseEntity<String> eliminarIngrediente(@PathVariable("idComida") long idComida, 
+    		@PathVariable("idIngrediente") long idIngrediente){
+    	
+    	if (this.getComidaService().eliminarIngrediente(idComida, idIngrediente)) {
+    		return new ResponseEntity<>(HttpStatus.OK);
+    	} else {
+    		return new ResponseEntity<>("Ingrediente no eliminado", HttpStatus.CONFLICT);
+    	}
+    }
+    
+    @RequestMapping(path="/comidas/{idComida}/ingredientes/{idIngrediente}", method = RequestMethod.PUT)
+    public ResponseEntity<String> actualizarIngrediente(@PathVariable("idComida") long idComida, 
+    		@PathVariable("idIngrediente") long idIngrediente, String nombre, int cantidad, String medida){
+    	
+    	if (this.getComidaService().actualizarIngrediente(idComida, idIngrediente, nombre, cantidad, medida)) {
+    		return new ResponseEntity<>(HttpStatus.OK);
+    	} else {
+    		return new ResponseEntity<>("Ingrediente no eliminado", HttpStatus.CONFLICT);
     	}
     }
         

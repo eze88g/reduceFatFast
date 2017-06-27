@@ -3,7 +3,6 @@ package ar.com.reduceFatFast.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
@@ -14,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.MapKey;
-import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
 import org.springframework.beans.factory.annotation.Value;

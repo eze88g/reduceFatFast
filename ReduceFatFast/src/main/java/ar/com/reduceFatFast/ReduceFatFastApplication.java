@@ -13,7 +13,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import ar.com.reduceFatFast.model.Sistema;
-import ar.com.reduceFatFast.repository.SistemaRepository;
 import ar.com.reduceFatFast.service.SistemaService;
 
 @SpringBootApplication

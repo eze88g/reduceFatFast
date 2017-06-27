@@ -1,12 +1,11 @@
 package modelTest;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import ar.com.reduceFatFast.model.Comida;
 import ar.com.reduceFatFast.model.Nutricionista;
 import ar.com.reduceFatFast.model.Paciente;
 import ar.com.reduceFatFast.model.Sistema;

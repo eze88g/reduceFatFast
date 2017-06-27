@@ -3,6 +3,8 @@
  */
 package ar.com.reduceFatFast.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.com.reduceFatFast.dto.DietaSemanalDto;
+import ar.com.reduceFatFast.dto.GrupoDto;
+import ar.com.reduceFatFast.dto.PacienteDto;
 import ar.com.reduceFatFast.service.GrupoService;
 
 /**
@@ -41,6 +45,14 @@ public class GrupoController {
     		return new ResponseEntity<>("Grupo no creado", HttpStatus.CONFLICT);
     	}
     }
+	
+	@RequestMapping(path="/grupos", method = RequestMethod.GET)
+    public ResponseEntity<List<GrupoDto>> listarGrupos(){
+		
+		List<GrupoDto> result = this.getGrupoService().listarGrupos();
+		
+		return new ResponseEntity<>(result, HttpStatus.OK);
+    }
     
     @RequestMapping(path="/grupos/{idGrupo}/miembros", method = RequestMethod.POST)
     public ResponseEntity<String> agregarPaciente(long idUsuario, long idGrupo, long idPaciente){
@@ -49,6 +61,14 @@ public class GrupoController {
     	} else {
     		return new ResponseEntity<>("Miembro no agregado al grupo", HttpStatus.CONFLICT);
     	}
+    }
+    
+    @RequestMapping(path="/grupos/{idGrupo}/miembros", method = RequestMethod.GET)
+    public ResponseEntity<List<PacienteDto>> listarPacientes(long idUsuario, long idGrupo){
+    	
+    	List<PacienteDto> result = this.getGrupoService().listarMiembros(idUsuario, idGrupo); 
+    	
+    	return new ResponseEntity<>(result, HttpStatus.OK);
     }
     
     @RequestMapping(path="/grupos/{idGrupo}/dieta", method = RequestMethod.GET)
@@ -62,4 +82,12 @@ public class GrupoController {
     	}
     }
     
+    @RequestMapping(path="/grupos/{idGrupo}/dieta/validar", method = RequestMethod.POST)
+    public ResponseEntity<String> validarDieta(long idUsuario, long idGrupo){
+    	if (this.getGrupoService().validarDieta(idUsuario, idGrupo)) {
+    		return new ResponseEntity<>(HttpStatus.OK);
+    	} else {
+    		return new ResponseEntity<>("Dieta no validada", HttpStatus.CONFLICT);
+    	}
+    }
 }

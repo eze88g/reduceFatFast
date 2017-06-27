@@ -6,7 +6,6 @@ package ar.com.reduceFatFast.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-import ar.com.reduceFatFast.model.Comida;
 import ar.com.reduceFatFast.model.Dia;
 import lombok.Data;
 
@@ -27,8 +26,8 @@ public @Data class DiaDto {
 		this.setCantidadComidasPorDia(dia.getCantidadComidasPorDia());
 		this.setComidas(new ArrayList<ComidaDto>());
 		
-//		for(Comida each : dia.getComidas()) {
-//			this.getComidas().add(new ComidaDto(each));
-//		}
+		for(Integer each : dia.getComidas().keySet()) {
+			this.getComidas().add(new ComidaDto(dia.getComidas().get(each)));
+		}
 	}
 }
