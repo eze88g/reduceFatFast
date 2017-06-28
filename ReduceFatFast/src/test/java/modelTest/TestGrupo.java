@@ -86,8 +86,7 @@ public class TestGrupo {
 		this.testCrearGrupo();
 		this.testAgregarPaciente();
 		paciente1.agregarComida(unaComida, 1, ComidaDelDia.ALMUERZO);
-		assertEquals(7, unGrupo.getDietaSemanal().getDias().size());
-		assertEquals(4, unGrupo.getDietaSemanal().getDias().get(1).getComidas().size());
-		assertEquals("Pizza", unGrupo.getDietaSemanal().dias.get(1).getComida(ComidaDelDia.ALMUERZO).getNombre());
+		assertEquals(1, unGrupo.getDietaSemanal().getDias().size());
+		assertEquals(1, unGrupo.getDietaSemanal().getDiaNumero(1).getComidas().size());
 	}
 }

@@ -28,10 +28,16 @@ public @Data class DietaSemanal {
     @JoinColumn(name="DIETA_ID")
 	public List<Dia> dias;
 	
-	public void agregarComida (Comida unaComida, Integer numeroDeDia, ComidaDelDia comidaDelDia){
-			Dia selected = dias.get(numeroDeDia);
-			selected.setComida(comidaDelDia, unaComida);
-			//this.dias.set(numeroDeDia, selected);
+	public void agregarComida (Comida unaComida, Integer numeroDia, ComidaDelDia comidaDelDia){
+		Dia selected;
+		try {
+			selected = dias.get(numeroDia);
+		} catch (IndexOutOfBoundsException e) {
+			selected = new Dia(numeroDia);
+			dias.add(selected);
+		}	
+		selected.setComida(comidaDelDia, unaComida);
+		//this.dias.set(numeroDeDia, selected);
 	}
 	
 	public void agregarDia(Dia dia, Integer pos){
@@ -44,6 +50,16 @@ public @Data class DietaSemanal {
 
 	public Dia getDia(int j) {
 		return this.getDias().get(j);
+	}
+	
+	public Dia getDiaNumero(int j) {
+		Dia dia = null;
+		for (int i=0; i<dias.size();i++){
+			if (dias.get(i).getNumeroDia()==j){
+				dia = dias.get(i);
+			}
+		}
+		return dia;
 	}
 	
 	public DietaSemanal(){

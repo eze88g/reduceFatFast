@@ -44,6 +44,14 @@ public class TestController {
 		comida.agregarIngrediente("Huevos", 2, "huevos fritos");
 		comida.agregarIngrediente("Fiambre", 100, "gr");
 		this.getService().add(comida);
+
+		return comida;
+	}
+	@RequestMapping("/crearPollo")
+	public Comida crearPollo(){
+		Comida comida = new Comida("pollo");
+		this.getService().add(comida);
+
 		return comida;
 	}
 	
@@ -63,7 +71,7 @@ public class TestController {
 	
 	@RequestMapping("/crearDia")
 	public Dia crearDia(){
-		Dia dia = new Dia();
+		Dia dia = new Dia(0);
 		List<Comida> comidas = this.getComidas();
 		dia.getComidas().put(0, comidas.get(0));
 		dia.getComidas().put(1, comidas.get(0));
@@ -87,9 +95,10 @@ public class TestController {
 		List<Dia> dias = new ArrayList<Dia>();
 		Dia dia;
 		for (int i=0; i<7; i++) {
-			dia = new Dia();
+			dia = new Dia(i);
 			dia.setCantidadComidasPorDia(4);	
 			dia.setComida(ComidaDelDia.ALMUERZO, comidas.get(0));
+			dia.setComida(ComidaDelDia.CENA, comidas.get(1));
 			dias.add(dia);
 		}
 		dieta.agregarDias(dias);
