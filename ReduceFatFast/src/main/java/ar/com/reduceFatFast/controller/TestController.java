@@ -166,6 +166,11 @@ public class TestController {
 	public Sistema actualizarSistema(){
 		return this.getService().actualizarSistema();
 	}
+	
+	@RequestMapping("/prueba")
+	public Boolean prueba(){
+		return this.getService().prueba();
+	}
 
 	/**
 	 * @return the service

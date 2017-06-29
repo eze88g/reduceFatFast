@@ -16,6 +16,7 @@ import ar.com.reduceFatFast.model.DietaSemanal;
 import ar.com.reduceFatFast.model.Grupo;
 import ar.com.reduceFatFast.model.Ingrediente;
 import ar.com.reduceFatFast.model.Nutricionista;
+import ar.com.reduceFatFast.model.Paciente;
 import ar.com.reduceFatFast.model.Sistema;
 import ar.com.reduceFatFast.model.Usuario;
 import ar.com.reduceFatFast.repository.ComidaRepository;
@@ -126,5 +127,12 @@ public @Data class TestService {
 		sistema.getUsuarios().addAll(usuarios);
 		this.getSistemaRepository().save(sistema);
 		return sistema;
+	}
+	
+	@org.springframework.transaction.annotation.Transactional
+	public Boolean prueba(){
+		Sistema sistema = this.getSistemaRepository().findOne(1l);
+		sistema.getUsuarios().add(new Paciente());
+		return true;
 	}
 }
