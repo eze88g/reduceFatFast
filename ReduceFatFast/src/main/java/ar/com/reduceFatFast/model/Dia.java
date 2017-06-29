@@ -29,23 +29,21 @@ public @Data class Dia {
 	private long version;
 	@Value("${modelo.cantidadComidasPorDia}")
 	private Integer cantidadComidasPorDia;
-	private Integer numeroDia;
 //	@ManyToMany(cascade = CascadeType.PERSIST)
 //	private List<Comida> comidas;
 	@ManyToMany(cascade=CascadeType.PERSIST) @JoinColumn(name="id") @MapKey(name="id")
 	private Map<Integer,Comida> comidas;
 	
-	public Dia(Integer unNumeroDia) {
+	public Dia() {
 		//this.setComidas(new ArrayList<Comida>());
 		this.setComidas(new HashMap<Integer,Comida>());
-		numeroDia = unNumeroDia;
 //		for (int i=0; i<4; i++){
 //			comidas.add(null);
 //		}
 	}
 
-	public Dia(ComidaDelDia comidaDelDia, Comida unaComida, Integer unNumeroDia) {
-		this(unNumeroDia);
+	public Dia(ComidaDelDia comidaDelDia, Comida unaComida) {
+		this();
 		this.setComida(comidaDelDia, unaComida);
 	}
 

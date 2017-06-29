@@ -4,7 +4,9 @@
 package ar.com.reduceFatFast.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Hibernate;
 import org.slf4j.Logger;
@@ -71,7 +73,7 @@ public class TestController {
 	
 	@RequestMapping("/crearDia")
 	public Dia crearDia(){
-		Dia dia = new Dia(0);
+		Dia dia = new Dia();
 		List<Comida> comidas = this.getComidas();
 		dia.getComidas().put(0, comidas.get(0));
 		dia.getComidas().put(1, comidas.get(0));
@@ -84,22 +86,22 @@ public class TestController {
 	}
 	
 	@RequestMapping("/getDias")
-	public List<Dia> getAllDias(){
-		return (List<Dia>) this.getService().getAllDias();
+	public Map<Integer,Dia> getAllDias(){
+		return (Map<Integer,Dia>) this.getService().getAllDias();
 	}
 	
 	@RequestMapping("/addDieta")
 	public DietaSemanal addDieta(){
 		DietaSemanal dieta = new DietaSemanal();
 		List<Comida> comidas = this.getComidas();
-		List<Dia> dias = new ArrayList<Dia>();
+		Map<Integer,Dia> dias = new HashMap<Integer,Dia>();
 		Dia dia;
 		for (int i=0; i<7; i++) {
-			dia = new Dia(i);
+			dia = new Dia();
 			dia.setCantidadComidasPorDia(4);	
 			dia.setComida(ComidaDelDia.ALMUERZO, comidas.get(0));
 			dia.setComida(ComidaDelDia.CENA, comidas.get(1));
-			dias.add(dia);
+			dias.put(i,dia);
 		}
 		dieta.agregarDias(dias);
 		this.getService().add(dieta);

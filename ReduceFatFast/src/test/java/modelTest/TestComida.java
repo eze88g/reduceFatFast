@@ -35,17 +35,17 @@ public class TestComida {
 	@Test
 	public void testAgregarComidaDieta() {
 		Comida unaComida;
-		DietaSemanal dieta = new DietaSemanal ();
+		DietaSemanal dieta = new DietaSemanal();
 		unaComida = paciente.crearComida("Pizza");
 		unaComida.agregarIngrediente("Sal", 100, "gr");
 		dieta.agregarComida(unaComida, 1, ComidaDelDia.ALMUERZO);
-		assertEquals ("Pizza",dieta.getDiaNumero(1).getComida(ComidaDelDia.ALMUERZO).getNombre());
+		assertEquals ("Pizza",dieta.getDia(1).getComida(ComidaDelDia.ALMUERZO).getNombre());
 	}
 	
 	@Test
 	public void testAgregarComidaDia() {
 		Comida unaComida;
-		Dia dia = new Dia(1);
+		Dia dia = new Dia();
 		unaComida = paciente.crearComida("Pizza");
 		unaComida.agregarIngrediente("Sal", 100, "gr");
 		dia.setComida(ComidaDelDia.ALMUERZO, unaComida);

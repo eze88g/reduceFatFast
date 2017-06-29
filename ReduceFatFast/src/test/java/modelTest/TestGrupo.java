@@ -62,7 +62,6 @@ public class TestGrupo {
 		assertEquals(null, unNutricionista.buscarGrupo("falso"));
 	}
 	
-	
 	@Test
 	public void testCrearGrupo() {
 		unGrupo = unNutricionista.crearGrupo("Adultos");
@@ -87,6 +86,6 @@ public class TestGrupo {
 		this.testAgregarPaciente();
 		paciente1.agregarComida(unaComida, 1, ComidaDelDia.ALMUERZO);
 		assertEquals(1, unGrupo.getDietaSemanal().getDias().size());
-		assertEquals(1, unGrupo.getDietaSemanal().getDiaNumero(1).getComidas().size());
+		assertEquals(1, unGrupo.getDietaSemanal().getDia(1).getComidas().size());
 	}
 }
