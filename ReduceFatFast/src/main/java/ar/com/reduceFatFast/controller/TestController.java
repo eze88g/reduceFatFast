@@ -99,7 +99,7 @@ public class TestController {
 			dia = new Dia();
 			dia.setCantidadComidasPorDia(4);	
 			dia.setComida(ComidaDelDia.ALMUERZO, comidas.get(0));
-			dia.setComida(ComidaDelDia.CENA, comidas.get(1));
+			dia.setComida(ComidaDelDia.CENA, comidas.get(0));
 			dias.put(i,dia);
 		}
 		dieta.agregarDias(dias);
