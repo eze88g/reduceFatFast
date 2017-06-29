@@ -21,4 +21,27 @@ public @Data class Nutricionista extends Usuario {
 		super(nombre, dni);
 		this.setGrupos(new ArrayList<Grupo>());
 	}
+	
+	public void agregarGrupo(Grupo unGrupo){
+		grupos.add(unGrupo);
+	}
+	
+	public boolean borrarGrupo(Grupo unGrupo){
+		if ( grupos.contains(unGrupo) ){
+			grupos.remove(unGrupo);	
+			return true;
+		}
+		else
+			return false;
+	}
+	
+	public Grupo buscarGrupo (String unNombre){
+		Grupo grupo = null;
+		for (int i=0;i<grupos.size();i++){
+			if (unNombre == grupos.get(i).getNombre()){
+				grupo = grupos.get(i);
+			}
+		}
+		return grupo;
+	}
 }

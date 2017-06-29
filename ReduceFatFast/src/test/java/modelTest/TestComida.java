@@ -28,6 +28,7 @@ public class TestComida {
 		Comida unaComida;
 		unaComida = paciente.crearComida("Pizza");
 		unaComida.agregarIngrediente("Sal", 100, "gr");
+		sistema.agregarComida(unaComida);
 		assertEquals(1, sistema.getComidas().size());
 		assertEquals(1, sistema.getComidas().get(0).getIngredientes().size());
 	}

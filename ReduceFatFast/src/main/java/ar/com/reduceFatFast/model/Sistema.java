@@ -41,8 +41,6 @@ public @Data class Sistema {
 		this.setGrupos(new ArrayList<Grupo>());
 	}
 	
-	//TODO: como hacemos el loguin? Una clase aparte del sistema?
-
 	public Usuario buscarUsuarioByDni (int unDni){
 		Usuario usuario = null;
 		for (int i=0;i<usuarios.size();i++){
@@ -57,7 +55,6 @@ public @Data class Sistema {
 			usuarios.add(unUsuario);
 			return true;
 		}
-		
 		return false;
 	}
 	public void borrarUsuario (Usuario unUsuario){
@@ -66,10 +63,14 @@ public @Data class Sistema {
 	public void agregarComida (Comida unaComida){
 		comidas.add(unaComida);
 	}
-	public void agregarGrupo (Grupo unGrupo){
-		grupos.add(unGrupo);
-	}
-	public void borrarGrupo (Grupo unGrupo){
-		grupos.remove(unGrupo);
+	
+	public boolean agregarGrupo (Grupo unGrupo){
+		if (unGrupo.getNutricionista().buscarGrupo(unGrupo.getNombre()) == null ){
+			grupos.add(unGrupo);
+			unGrupo.getNutricionista().agregarGrupo(unGrupo);
+			return true;
+		}		
+		else
+			return false;
 	}
 }
