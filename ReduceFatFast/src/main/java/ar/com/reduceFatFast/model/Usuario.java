@@ -6,7 +6,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
@@ -20,8 +19,6 @@ public abstract @Data class Usuario {
 	
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
-	@ManyToOne
-	protected Sistema sistema;
 	@Version
 	private long version;
 	private String nombre;
@@ -29,11 +26,10 @@ public abstract @Data class Usuario {
 	
 	protected Usuario(){}
 	
-	public Usuario(String nombre, int dni, Sistema sistema) {
+	public Usuario(String nombre, int dni) {
 		super();
 		this.nombre = nombre;
 		this.dni = dni;
-		this.sistema = sistema;
 		
 	}
 

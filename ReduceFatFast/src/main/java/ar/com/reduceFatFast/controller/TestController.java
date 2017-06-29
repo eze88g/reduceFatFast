@@ -3,7 +3,6 @@
  */
 package ar.com.reduceFatFast.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -132,7 +131,7 @@ public class TestController {
 	
 	@RequestMapping("/agregarPaciente")
 	public Grupo crearPaciente(){
-		Paciente paciente = new Paciente("Sancho Panza", 11111111, null);
+		Paciente paciente = new Paciente("Sancho Panza", 11111111);
 		Nutricionista nutricionista = this.getService().getNutricionistas().get(0);
 		nutricionista.getGrupos().get(0).agregarPaciente(paciente);
 		this.getService().add(nutricionista.getGrupos().get(0));
@@ -150,7 +149,7 @@ public class TestController {
 	
 	@RequestMapping("/crearNutricionista")
 	public Nutricionista crearNutricionista(){
-		Nutricionista nutricionista = new Nutricionista("Lavar Ball", 33333333,null);
+		Nutricionista nutricionista = new Nutricionista("Lavar Ball", 33333333);
 		this.getService().add(nutricionista);
 		return nutricionista;
 		

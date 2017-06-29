@@ -18,8 +18,8 @@ public class TestUsuario {
 	@Before
 	public void setUp() throws Exception {
 		sistema = new Sistema ();
-		unPaciente = new Paciente("Jose", 1234, sistema);
-		unNutricionista = new Nutricionista ("Marta", 5461, sistema);
+		unPaciente = new Paciente("Jose", 1234);
+		unNutricionista = new Nutricionista ("Marta", 5461);
 	}
 
 	@After
@@ -41,7 +41,7 @@ public class TestUsuario {
 
 	@Test
 	public void testAgregarDniRepetido() {
-		Paciente otroPaciente = new Paciente("Marcos", 1234, sistema);
+		Paciente otroPaciente = new Paciente("Marcos", 1234);
 		sistema.agregarUsuario(unPaciente);
 		assertEquals (false, sistema.agregarUsuario(otroPaciente));
 		assertEquals (1, sistema.getUsuarios().size());

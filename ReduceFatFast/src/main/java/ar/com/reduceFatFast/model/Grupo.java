@@ -49,5 +49,15 @@ public @Data class Grupo {
 	public void quitarPaciente(Paciente unPaciente){
 		pacientes.remove(unPaciente);
 	}
+	
+	public boolean validarDieta(Nutricionista nutricionista) {
+		
+		if (this.getNutricionista().equals(nutricionista) && !this.getDietaSemanal().isValidacion()) {
+			this.getDietaSemanal().setValidacion(true);
+			return true;
+		}
+		
+		return false;
+	}
 
 }

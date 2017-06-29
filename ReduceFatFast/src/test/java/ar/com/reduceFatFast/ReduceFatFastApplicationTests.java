@@ -52,8 +52,8 @@ public class ReduceFatFastApplicationTests {
 			repository.save(sistema);
 			
 			logger.info("Agrego un usuario y guardo");
-			Paciente paciente = new Paciente("Lebron", 30156142,sistema);
-			Nutricionista nutricionista = new Nutricionista("Samanta", 30156181, null);
+			Paciente paciente = new Paciente("Lebron", 30156142);
+			Nutricionista nutricionista = new Nutricionista("Samanta", 30156181);
 			sistema.getUsuarios().add(paciente);
 			sistema.getUsuarios().add(nutricionista);
 			repository.save(sistema);

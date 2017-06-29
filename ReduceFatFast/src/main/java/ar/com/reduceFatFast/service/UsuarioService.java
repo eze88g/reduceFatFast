@@ -3,13 +3,17 @@
  */
 package ar.com.reduceFatFast.service;
 
-import java.util.List;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import ar.com.reduceFatFast.dto.NutricionistaDto;
-import ar.com.reduceFatFast.dto.PacienteDto;
+import ar.com.reduceFatFast.model.Nutricionista;
+import ar.com.reduceFatFast.model.Paciente;
+import ar.com.reduceFatFast.model.Sistema;
+import ar.com.reduceFatFast.repository.NutricionistaRepository;
+import ar.com.reduceFatFast.repository.PacienteRepository;
+import ar.com.reduceFatFast.repository.SistemaRepository;
 
 /**
  * @author Matias
@@ -17,26 +21,74 @@ import ar.com.reduceFatFast.dto.PacienteDto;
  */
 @Service
 @Configuration
+@Transactional
 public class UsuarioService {
 	
-	public boolean crearNutricionista(String nombre, int dni) {
-		// TODO Auto-generated method stub
-		return false;
+	@Autowired
+	private SistemaRepository repository;
+	
+	@Autowired
+	private NutricionistaRepository nutricionistaRepository;
+	
+	@Autowired
+	private PacienteRepository pacienteRepository;
+	
+	private SistemaRepository getRepository() {
+		return repository;
 	}
 
-	public boolean crearPaciente(String nombre, int dni) {
-		// TODO Auto-generated method stub
-		return false;
+	private void setRepository(SistemaRepository repository) {
+		this.repository = repository;
 	}
 
-	public List<PacienteDto> listarPacientes() {
-		// TODO Auto-generated method stub
+	private PacienteRepository getPacienteRepository() {
+		return pacienteRepository;
+	}
+
+	private void setPacienteRepository(PacienteRepository pacienteRepository) {
+		this.pacienteRepository = pacienteRepository;
+	}
+	
+	private NutricionistaRepository getNutricionistaRepository() {
+		return nutricionistaRepository;
+	}
+
+	private void setNutricionistaRepository(NutricionistaRepository nutricionistaRepository) {
+		this.nutricionistaRepository = nutricionistaRepository;
+	}
+
+	private Sistema getSistema(){
+		return getRepository().findOne(1l);
+	}
+	
+	public Nutricionista crearNutricionista(String nombre, int dni) {
+		Nutricionista nutricionista = new Nutricionista(nombre, dni);
+		
+		Sistema sistema = getSistema();
+		if (sistema.agregarUsuario(nutricionista)) {
+			return nutricionista;
+		};
+		
 		return null;
 	}
 
-	public List<NutricionistaDto> listarNutricionistas() {
-		// TODO Auto-generated method stub
+	public Paciente crearPaciente(String nombre, int dni) {
+		Paciente paciente = new Paciente(nombre, dni);
+		
+		Sistema sistema = getSistema();
+		if (sistema.agregarUsuario(paciente)) {
+			return paciente;
+		};
+		
 		return null;
+	}
+
+	public Iterable<Paciente> listarPacientes() {
+		return getPacienteRepository().findAll();
+	}
+
+	public Iterable<Nutricionista> listarNutricionistas() {
+		return getNutricionistaRepository().findAll();
 	}	
 	
 }

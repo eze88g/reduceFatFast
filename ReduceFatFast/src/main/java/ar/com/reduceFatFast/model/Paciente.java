@@ -22,8 +22,8 @@ public @Data class Paciente extends Usuario {
 	@ManyToOne
 	public Grupo grupo;
 	
-	public Paciente(String nombre, int dni, Sistema sistema) {
-		super(nombre, dni, sistema);
+	public Paciente(String nombre, int dni) {
+		super(nombre, dni);
 	}
 	
 	public Paciente() {
@@ -50,7 +50,6 @@ public @Data class Paciente extends Usuario {
 	
 	public Comida crearComida(String aName){
 		Comida unaComida = new Comida (aName);
-		this.getSistema().agregarComida(unaComida);
 		return(unaComida);
 	}
 	

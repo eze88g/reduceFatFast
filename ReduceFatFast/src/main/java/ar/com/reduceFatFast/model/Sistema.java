@@ -53,12 +53,12 @@ public @Data class Sistema {
 		return usuario;
 	}
 	public boolean agregarUsuario (Usuario unUsuario){
-		if (this.buscarUsuarioByDni(unUsuario.getDni())==null){
+		if (this.buscarUsuarioByDni(unUsuario.getDni()) == null){
 			usuarios.add(unUsuario);
 			return true;
 		}
-		else
-			return false;
+		
+		return false;
 	}
 	public void borrarUsuario (Usuario unUsuario){
 		usuarios.remove(unUsuario);

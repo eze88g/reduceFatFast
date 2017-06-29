@@ -1,6 +1,6 @@
 package modelTest;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +20,7 @@ public class TestComida {
 	@Before
 	public void setUp() throws Exception {
 		sistema = new Sistema ();
-		paciente = new Paciente("Juan",330000,sistema);
+		paciente = new Paciente("Juan",330000);
 	}
 
 	@Test
