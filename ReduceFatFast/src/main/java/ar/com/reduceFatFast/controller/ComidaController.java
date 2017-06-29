@@ -12,10 +12,12 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.com.reduceFatFast.dto.ComidaDto;
 import ar.com.reduceFatFast.dto.IngredienteDto;
+import ar.com.reduceFatFast.model.Comida;
 import ar.com.reduceFatFast.service.ComidaService;
 
 /**
@@ -38,11 +40,13 @@ public class ComidaController {
 	}
  
     @RequestMapping(path="/comidas", method = RequestMethod.POST)
-    public ResponseEntity<String> crearComida(int idUsuario, String nombre, long cantidadCalorias){
-    	if (this.getComidaService().crearComida(idUsuario, nombre, cantidadCalorias)) {
-    		return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<Comida> crearComida(int idUsuario, String nombre, long cantidadCalorias){
+    	Comida comida = this.getComidaService().crearComida(idUsuario, nombre, cantidadCalorias);
+    	if (comida.getId()!=0) {
+    		ResponseEntity response = new ResponseEntity<>(comida, HttpStatus.OK);
+    		return response;
     	} else {
-    		return new ResponseEntity<>("Comida no creada", HttpStatus.CONFLICT);
+    		return new ResponseEntity<>(null, HttpStatus.CONFLICT);
     	}
     }
     
@@ -55,7 +59,7 @@ public class ComidaController {
     }
 
     @RequestMapping(path="/comidas/{idComida}", method = RequestMethod.PUT)
-    public ResponseEntity<String> editarComida(@PathVariable("idComida") long idComida,int idUsuario, String nombre, long cantidadCalorias){
+    public ResponseEntity<String> editarComida(@PathVariable("idComida") Long idComida,@RequestParam(value="idUsuario", required=false)Integer idUsuario, @RequestParam(value="nombre")String nombre, @RequestParam(value="cantidadCalorias")Long cantidadCalorias){
     	if (this.getComidaService().editarComida(idComida, idUsuario, nombre, cantidadCalorias)) {
     		return new ResponseEntity<>(HttpStatus.OK);
     	} else {
@@ -73,11 +77,12 @@ public class ComidaController {
     }
     
     @RequestMapping(path="/comidas/{idComida}/ingredientes", method = RequestMethod.POST)
-    public ResponseEntity<String> agregarIngrediente(@PathVariable("idComida") long idComida, int idUsuario, String nombre, int cantidad, String medida){
-    	if (this.getComidaService().agregarIngrediente(idUsuario, idComida, nombre, cantidad, medida)) {
-    		return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<Comida> agregarIngrediente(@PathVariable("idComida") long idComida, int idUsuario, String nombre, int cantidad, String medida){
+    	Comida comida = this.getComidaService().agregarIngrediente(idUsuario, idComida, nombre, cantidad, medida);
+    	if (comida.getId()!=0) {
+    		return new ResponseEntity<>(comida, HttpStatus.OK);
     	} else {
-    		return new ResponseEntity<>("Ingrediente no agregado", HttpStatus.CONFLICT);
+    		return new ResponseEntity<>(null, HttpStatus.CONFLICT);
     	}
     }
     
