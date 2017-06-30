@@ -22,6 +22,7 @@ import ar.com.reduceFatFast.model.DietaSemanal;
 import ar.com.reduceFatFast.model.Grupo;
 import ar.com.reduceFatFast.model.Paciente;
 import ar.com.reduceFatFast.service.GrupoService;
+import io.swagger.annotations.Api;
 
 /**
  * @author Matias
@@ -29,6 +30,7 @@ import ar.com.reduceFatFast.service.GrupoService;
  */
 @Validated
 @RestController
+@Api(value="Grupo", description="Operaciones relacionadas con la administracion de la Grupos")
 public class GrupoController {
 	
     @Autowired

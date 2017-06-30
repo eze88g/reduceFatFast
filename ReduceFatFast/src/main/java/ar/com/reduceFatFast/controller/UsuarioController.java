@@ -19,6 +19,7 @@ import ar.com.reduceFatFast.dto.PacienteDto;
 import ar.com.reduceFatFast.model.Nutricionista;
 import ar.com.reduceFatFast.model.Paciente;
 import ar.com.reduceFatFast.service.UsuarioService;
+import io.swagger.annotations.Api;
 
 /**
  * @author Matias
@@ -26,6 +27,7 @@ import ar.com.reduceFatFast.service.UsuarioService;
  */
 @Validated
 @RestController
+@Api(value="Usuarios", description="Operaciones relacionadas con la administracion de usuarios")
 public class UsuarioController {
 	
     @Autowired
