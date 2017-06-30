@@ -78,14 +78,14 @@ public class GrupoController extends AbstractController {
 	@RequestMapping(path="/grupos", method = RequestMethod.GET)
     public ResponseEntity<List<GrupoDto>> listarGrupos(){
 		
-//		Iterable<Grupo> result = this.getGrupoService().listarGrupos();
-//		
-//		List<GrupoDto> grupos = new ArrayList<GrupoDto>();
-//		for (Grupo each : result) {
-//			grupos.add(new GrupoDto(each));
-//		}
+		Iterable<Grupo> result = this.getGrupoService().listarGrupos();
 		
-		return new ResponseEntity<>(this.getGrupoService().listarGrupos(), HttpStatus.OK);
+		List<GrupoDto> grupos = new ArrayList<GrupoDto>();
+		for (Grupo each : result) {
+			grupos.add(new GrupoDto(each));
+		}
+		
+		return new ResponseEntity<>(grupos, HttpStatus.OK);
     }
     
 	@ApiOperation(value = "A partir un grupo ya creado, se agrega un paciente", response = String.class)
@@ -163,6 +163,14 @@ public class GrupoController extends AbstractController {
     	}
     }
     
+	@ApiOperation(value = "Agrega una comida a la dieta semanal del grupo", response = Grupo.class)
+	@ApiResponses(value = {
+	        @ApiResponse(code = 200, message = "Comida agreaga satisfactoriamente"),
+	        @ApiResponse(code = 401, message = "No se encuentra autorizado para obtener un listado de los grupos del sistema"),
+	        @ApiResponse(code = 403, message = "El acceso al listado de grupos se encuentra prohibido"),
+	        @ApiResponse(code = 409, message = "Ocurrio un error al agregar la comida")
+	}
+	)
     @RequestMapping(path="/grupos/{idGrupo}/dieta/comidas", method = RequestMethod.POST)
     public ResponseEntity<String> agregarComidaADieta(@PathVariable("idGrupo") long idGrupo, long idComida, Integer dia, int comidaDelDia){
     	this.getGrupoService().agregarComidaADieta(idGrupo, idComida, dia, comidaDelDia);
