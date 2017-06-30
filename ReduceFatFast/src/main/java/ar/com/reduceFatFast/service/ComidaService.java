@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import org.hibernate.annotations.Synchronize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
@@ -42,19 +43,22 @@ public class ComidaService {
 		Comida comida = new Comida(nombre);
 		comida.setCantidadCalorias(cantidadCalorias);
 		
-		Sistema sistema = getSistema();
-		sistema.agregarComida(comida);
-		
-		return comida;
+		Sistema sistema;
+		synchronized(sistema = getSistema()) {
+			sistema.agregarComida(comida);
+			return comida;
+		}	
 	}
 
 	@Transactional
-	public Comida editarComida(long idComida, int idUsuario, String nombre, long cantidadCalorias) {
+	public Comida editarComida(long idComida, int idUsuario, String nombre, long cantidadCalorias) throws Exception {
 		Comida comidaParaEditar;
 		try{
 			comidaParaEditar = comidaRepository.findOne(idComida);
-			comidaParaEditar.setNombre(nombre);
-			comidaParaEditar.setCantidadCalorias(cantidadCalorias);
+			synchronized (comidaParaEditar){
+				comidaParaEditar.setNombre(nombre);
+				comidaParaEditar.setCantidadCalorias(cantidadCalorias);
+			}
 		}catch(Exception e){
 			throw e;
 		}
@@ -66,18 +70,20 @@ public class ComidaService {
 		Comida comidaParaEditar = null;
 		try{
 			comidaParaEditar = comidaRepository.findOne(idComida);
-			comidaParaEditar.agregarIngrediente(nombre, cantidad, medida);			
+			synchronized (comidaParaEditar){
+				comidaParaEditar.agregarIngrediente(nombre, cantidad, medida);
+			}			
 		}catch(Exception e){
 			throw e;
 		}
 		return comidaParaEditar;
 	}
 
-	public List<Comida> listarComidas() {
+	synchronized public List<Comida> listarComidas() {
 		return (List<Comida>) this.comidaRepository.findAll();
 	}
 
-	public List<Ingrediente> listarIngredientes(long idComida) {
+	synchronized public List<Ingrediente> listarIngredientes(long idComida) {
 		try{
 			Comida comida = this.comidaRepository.findOne(idComida);
 			if(comida!=null){
@@ -91,23 +97,23 @@ public class ComidaService {
 	}
 
 	@Transactional
-	public boolean eliminarComida(long idComida) {
+	synchronized public boolean eliminarComida(long idComida) {
 		Sistema sistema = this.repository.findOne(1l);
-		Comida comida = this.comidaRepository.findOne(idComida);
-		Integer i = sistema.getComidas().indexOf(comida);
-		sistema.getComidas().remove(comida);
+		Comida comida = this.comidaRepository.findOne(idComida);		
+		synchronized(sistema){
+			Integer i = sistema.getComidas().indexOf(comida);
+			sistema.getComidas().remove(comida);
+		}	
 		return true;
 	}
 
 	public Optional<Ingrediente> obtenerIngrediente(long idComida, long idIngrediente) {
 		List<Ingrediente> ingredientes = this.listarIngredientes(idComida);
 		return ingredientes.stream().filter(x -> x.getId()==idIngrediente).findFirst();
-
 	}
 
 	@Transactional
-	public boolean eliminarIngrediente(long idComida, long idIngrediente) {
-		
+	synchronized public boolean eliminarIngrediente(long idComida, long idIngrediente){
 		Comida comida = this.comidaRepository.findOne(idComida);
 		if(comida!=null){
 			Optional<Ingrediente> ingrediente = comida.getIngredientes().stream().filter(x -> x.getId()==idIngrediente).findFirst();
@@ -117,7 +123,7 @@ public class ComidaService {
 	}
 
 	@Transactional
-	public Comida actualizarIngrediente(long idComida, long idIngrediente, String nombre, int cantidad,
+	synchronized public Comida actualizarIngrediente(long idComida, long idIngrediente, String nombre, int cantidad,
 			String medida) {
 		Comida comida = this.comidaRepository.findOne(idComida);
 		List<Ingrediente> ingredientes = this.listarIngredientes(idComida).stream().filter(x -> x.getId() == idIngrediente).collect(Collectors.toList());
