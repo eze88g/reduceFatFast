@@ -3,6 +3,7 @@
  */
 package ar.com.reduceFatFast.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ar.com.reduceFatFast.dto.GrupoDto;
 import ar.com.reduceFatFast.exception.ParametrosInvalidos;
 import ar.com.reduceFatFast.model.Comida;
 import ar.com.reduceFatFast.model.Comida.ComidaDelDia;
@@ -137,8 +139,20 @@ public class GrupoService {
 		return null;
 	}
 
-	public Iterable<Grupo> listarGrupos() {
-		return this.getGrupoRepository().findAll();
+	public List<GrupoDto> listarGrupos() {
+		Iterable<Grupo> grupos = this.getGrupoRepository().findAll();
+		
+		List<GrupoDto> lala = new ArrayList<>(); 
+		
+		for(Grupo each: grupos) {
+			lala.add(new GrupoDto(each));
+//			for (Dia dia: each.getDietaSemanal().getDias().values()) {
+//				dia.getCantidadComidasPorDia();
+//			}
+		}
+		
+//		return grupos;
+		return lala;
 	}
 
 	public boolean validarDieta(long idGrupo, long idNutricionista) {

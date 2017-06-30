@@ -5,7 +5,6 @@ package ar.com.reduceFatFast.service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ar.com.reduceFatFast.dto.ComidaDto;
 import ar.com.reduceFatFast.model.Comida;
 import ar.com.reduceFatFast.model.Ingrediente;
 import ar.com.reduceFatFast.model.Sistema;

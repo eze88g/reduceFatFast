@@ -1,7 +1,6 @@
 package ar.com.reduceFatFast.model;
 
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,10 +46,6 @@ public @Data class Dia {
 		this.setComida(comidaDelDia, unaComida);
 	}
 
-	public Comida getComida(Integer n) {
-		return ((ArrayList<Comida>)this.getComidas()).get(n);
-	}
-
 	public Comida getComida(ComidaDelDia comidaDelDia) {
 		int n ;
 		switch(comidaDelDia) {
@@ -65,9 +60,8 @@ public @Data class Dia {
 			break; // optional
 		case CENA :
 			n = 3;
-			break; // optional
-			// You can have any number of case statements.
-		default : // Optional
+			break;
+		default :
 			n = 0;
 		}
 		return (this.getComidas().get(n));

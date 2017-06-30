@@ -19,6 +19,10 @@ import ar.com.reduceFatFast.dto.PacienteDto;
 import ar.com.reduceFatFast.model.Nutricionista;
 import ar.com.reduceFatFast.model.Paciente;
 import ar.com.reduceFatFast.service.UsuarioService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 /**
  * @author Matias
@@ -26,6 +30,7 @@ import ar.com.reduceFatFast.service.UsuarioService;
  */
 @Validated
 @RestController
+@Api(value="Usuarios", description="Operaciones relacionadas con la administracion de usuarios")
 public class UsuarioController extends AbstractController{
 	
     @Autowired
@@ -39,6 +44,14 @@ public class UsuarioController extends AbstractController{
 		this.usuarioService = usuarioService;
 	}
  
+	@ApiOperation(value = "Crea un Nutricionista", response = NutricionistaDto.class)
+	@ApiResponses(value = {
+	        @ApiResponse(code = 200, message = "El nutricionista fue creado satisfactoriamente"),
+	        @ApiResponse(code = 401, message = "No se encuentra autorizado para crear un nuevo nutricionista"),
+	        @ApiResponse(code = 403, message = "El acceso a la creacion de nutricionistas se encuentra prohibido"),
+	        @ApiResponse(code = 409, message = "Ocurrio un error tratando de crear un nuevo nutricionista")
+	}
+	)
     @RequestMapping(path="/nutricionistas", method = RequestMethod.POST)
     public ResponseEntity<NutricionistaDto> crearNutricionista(String nombre, int dni){
     	
@@ -51,6 +64,14 @@ public class UsuarioController extends AbstractController{
     	}
     }
     
+	@ApiOperation(value = "Retorna una lista de Nutricionistas", response = NutricionistaDto.class)
+	@ApiResponses(value = {
+	        @ApiResponse(code = 200, message = "La lista de nutricionistas fue creada satisfactoriamente"),
+	        @ApiResponse(code = 401, message = "No se encuentra autorizado para generar un listado de nutricionistas"),
+	        @ApiResponse(code = 403, message = "El acceso al listado de nutricionistas se encuentra prohibido"),
+	        @ApiResponse(code = 409, message = "Ocurrio un error tratando de obtener el listado de nutricionista")
+	}
+	)
     @RequestMapping(path="/nutricionistas", method = RequestMethod.GET)
     public ResponseEntity<List<NutricionistaDto>> listarNutricionistas(){
     	
@@ -65,6 +86,14 @@ public class UsuarioController extends AbstractController{
     	return new ResponseEntity<>(nutricionistas, HttpStatus.OK);
     }
     
+	@ApiOperation(value = "Crea un Paciente", response = PacienteDto.class)
+	@ApiResponses(value = {
+	        @ApiResponse(code = 200, message = "El nutricionista fue creado satisfactoriamente"),
+	        @ApiResponse(code = 401, message = "No se encuentra autorizado para crear un nuevo nutricionista"),
+	        @ApiResponse(code = 403, message = "El acceso a la creacion de nutricionistas se encuentra prohibido"),
+	        @ApiResponse(code = 409, message = "Ocurrio un error tratando de crear un nuevo nutricionista")
+	}
+	)
     @RequestMapping(path="/pacientes", method = RequestMethod.POST)
     public ResponseEntity<PacienteDto> crearPaciente(String nombre, int dni){
     	
@@ -77,6 +106,14 @@ public class UsuarioController extends AbstractController{
     	}
     }
     
+	@ApiOperation(value = "Crea una lista de Pacientes", response = PacienteDto.class)
+	@ApiResponses(value = {
+	        @ApiResponse(code = 200, message = "La lista de nutricionistas fue creada satisfactoriamente"),
+	        @ApiResponse(code = 401, message = "No se encuentra autorizado para crear una lista de nutricionista"),
+	        @ApiResponse(code = 403, message = "El acceso a la lista de nutricionistas se encuentra prohibido"),
+	        @ApiResponse(code = 409, message = "Ocurrio un error tratando de crear un listado de nutricionista")
+	}
+	)
     @RequestMapping(path="/pacientes", method = RequestMethod.GET)
     public ResponseEntity<List<PacienteDto>> listarPacientes(){
     	

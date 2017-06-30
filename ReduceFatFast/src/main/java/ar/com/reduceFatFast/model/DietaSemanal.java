@@ -9,8 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.MapKey;
-import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
 import ar.com.reduceFatFast.model.Comida.ComidaDelDia;
@@ -25,7 +25,7 @@ public @Data class DietaSemanal {
 	private long version;
 	public boolean validacion;
 	
-	@OneToMany(cascade=CascadeType.PERSIST) @JoinColumn(name="id") @MapKey(name="id")
+	@ManyToMany(cascade=CascadeType.PERSIST) @JoinColumn(name="id") @MapKey(name="id")
 	private Map<Integer,Dia> dias;
 	
 	public DietaSemanal () {
@@ -46,7 +46,7 @@ public @Data class DietaSemanal {
 		this.getDias().putAll(dias);
 	}
 
-	public Dia getDia(int j) {
+	public Dia getDia(Integer j) {
 		return this.getDias().get(j);
 	}
 	
