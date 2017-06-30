@@ -37,10 +37,11 @@ public class ComidaService extends AbstractService {
 		Comida comida = new Comida(nombre);
 		comida.setCantidadCalorias(cantidadCalorias);
 		
-		Sistema sistema = getSistema();
-		sistema.agregarComida(comida);
-		
-		return comida;
+		Sistema sistema;
+		synchronized(sistema = getSistema()) {
+			sistema.agregarComida(comida);
+			return comida;
+		}	
 	}
 
 	@Transactional
@@ -48,8 +49,10 @@ public class ComidaService extends AbstractService {
 		Comida comidaParaEditar = comidaRepository.findOne(idComida);
 		this.checkearObjeto(comidaParaEditar, "Comida", idComida);
 		
-		comidaParaEditar.setNombre(nombre);
-		comidaParaEditar.setCantidadCalorias(cantidadCalorias);
+		synchronized (comidaParaEditar){
+			comidaParaEditar.setNombre(nombre);
+			comidaParaEditar.setCantidadCalorias(cantidadCalorias);
+		}
 
 		return comidaParaEditar;
 	}
@@ -59,46 +62,44 @@ public class ComidaService extends AbstractService {
 		Comida comidaParaEditar = comidaRepository.findOne(idComida);
 		this.checkearObjeto(comidaParaEditar, "Comida", idComida);
 		
-		comidaParaEditar.agregarIngrediente(nombre, cantidad, medida);			
+		synchronized (comidaParaEditar){
+			comidaParaEditar.agregarIngrediente(nombre, cantidad, medida);
+		}
 		
 		return comidaParaEditar;
 	}
 
-	public List<Comida> listarComidas() {
+	synchronized public List<Comida> listarComidas() {
 		return (List<Comida>) this.comidaRepository.findAll();
 	}
 
-	public List<Ingrediente> listarIngredientes(long idComida) {
+	synchronized public List<Ingrediente> listarIngredientes(long idComida) {
 		Comida comida = this.comidaRepository.findOne(idComida);
 		this.checkearObjeto(comida, "Comida", idComida);
 		
-		if(comida!=null){
-			return comida.getIngredientes();
-		}else{
-			return null;
-		}
+		return comida.getIngredientes();
 	}
 
 	@Transactional
-	public boolean eliminarComida(long idComida) {
+	synchronized public boolean eliminarComida(long idComida) {
 		Sistema sistema = this.getRepository().findOne(1l);
 		Comida comida = this.comidaRepository.findOne(idComida);
 		this.checkearObjeto(comida, "Comida", idComida);
 		
-		Integer i = sistema.getComidas().indexOf(comida);
-		sistema.getComidas().remove(comida);
+		synchronized(sistema){
+			Integer i = sistema.getComidas().indexOf(comida);
+			sistema.getComidas().remove(comida);
+		}
 		return true;
 	}
 
 	public Optional<Ingrediente> obtenerIngrediente(long idComida, long idIngrediente) {
 		List<Ingrediente> ingredientes = this.listarIngredientes(idComida);
 		return ingredientes.stream().filter(x -> x.getId()==idIngrediente).findFirst();
-
 	}
 
 	@Transactional
-	public boolean eliminarIngrediente(long idComida, long idIngrediente) {
-		
+	synchronized public boolean eliminarIngrediente(long idComida, long idIngrediente){
 		Comida comida = this.comidaRepository.findOne(idComida);
 		this.checkearObjeto(comida, "Comida", idComida);
 		
@@ -110,7 +111,7 @@ public class ComidaService extends AbstractService {
 	}
 
 	@Transactional
-	public Comida actualizarIngrediente(long idComida, long idIngrediente, String nombre, int cantidad,
+	synchronized public Comida actualizarIngrediente(long idComida, long idIngrediente, String nombre, int cantidad,
 			String medida) {
 		Comida comida = this.comidaRepository.findOne(idComida);
 		this.checkearObjeto(comida, "Comida", idComida);

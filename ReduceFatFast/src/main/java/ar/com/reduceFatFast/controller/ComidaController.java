@@ -52,7 +52,7 @@ public class ComidaController extends AbstractController{
 	        @ApiResponse(code = 409, message = "Ocurrio un problema tratando de crear la comida")
 	}
 	)
-    @RequestMapping(path="/comidas", method = RequestMethod.POST)
+    @RequestMapping(path="/comidas", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<Comida> crearComida(int idUsuario, String nombre, long cantidadCalorias){
     	Comida comida = this.getComidaService().crearComida(idUsuario, nombre, cantidadCalorias);
     	if (comida.getId()!=0) {
@@ -87,7 +87,7 @@ public class ComidaController extends AbstractController{
 	}
 	)
     @RequestMapping(path="/comidas/{idComida}", method = RequestMethod.PUT)
-    public ResponseEntity<String> editarComida(@PathVariable("idComida") Long idComida,@RequestParam(value="idUsuario", required=false)Integer idUsuario, @RequestParam(value="nombre")String nombre, @RequestParam(value="cantidadCalorias")Long cantidadCalorias){
+    public ResponseEntity<String> editarComida(@PathVariable("idComida") Long idComida,@RequestParam(value="idUsuario", required=false)Integer idUsuario, @RequestParam(value="nombre")String nombre, @RequestParam(value="cantidadCalorias")Long cantidadCalorias) throws Exception{
     	Comida comida = this.getComidaService().editarComida(idComida, idUsuario, nombre, cantidadCalorias);
     	if (comida!=null) {
     		return new ResponseEntity<>(HttpStatus.OK);
