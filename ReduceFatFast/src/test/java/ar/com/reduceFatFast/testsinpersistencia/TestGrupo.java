@@ -91,9 +91,9 @@ public class TestGrupo {
 		unaComida = new Comida ("Pizza");
 		this.testCrearGrupo();
 		this.testAgregarPaciente();
-		paciente1.agregarComida(unaComida, 1, ComidaDelDia.ALMUERZO);
+		paciente1.agregarComida(unaComida, 1l, ComidaDelDia.ALMUERZO);
 		assertEquals(1, unGrupo.getDietaSemanal().getDias().size());
-		assertEquals(1, unGrupo.getDietaSemanal().getDia(1).getComidas().size());
+		assertEquals(1, unGrupo.getDietaSemanal().getDia(1l).getComidas().size());
 	}
 	
 }

@@ -16,6 +16,7 @@ import javax.persistence.Version;
 
 import org.springframework.beans.factory.annotation.Value;
 
+import ar.com.reduceFatFast.exception.ParametrosInvalidos;
 import ar.com.reduceFatFast.model.Comida.ComidaDelDia;
 import lombok.Data;
 
@@ -28,17 +29,11 @@ public @Data class Dia {
 	private long version;
 	@Value("${modelo.cantidadComidasPorDia}")
 	private Integer cantidadComidasPorDia;
-//	@ManyToMany(cascade = CascadeType.PERSIST)
-//	private List<Comida> comidas;
 	@ManyToMany(cascade=CascadeType.PERSIST) @JoinColumn(name="id") @MapKey(name="id")
-	private Map<Integer,Comida> comidas;
+	private Map<Long,Comida> comidas;
 	
 	public Dia() {
-		//this.setComidas(new ArrayList<Comida>());
-		this.setComidas(new HashMap<Integer,Comida>());
-//		for (int i=0; i<4; i++){
-//			comidas.add(null);
-//		}
+		this.setComidas(new HashMap<Long,Comida>());
 	}
 
 	public Dia(ComidaDelDia comidaDelDia, Comida unaComida) {
@@ -47,45 +42,44 @@ public @Data class Dia {
 	}
 
 	public Comida getComida(ComidaDelDia comidaDelDia) {
-		int n ;
+		Long n ;
 		switch(comidaDelDia) {
 		case DESAYUNO :
-			n = 0;
-			break; // optional
+			n = 0l;
+			break;
 		case ALMUERZO :
-			n = 1;
-			break; // optional
+			n = 1l;
+			break;
 		case MERIENDA :
-			n = 2;
-			break; // optional
+			n = 2l;
+			break;
 		case CENA :
-			n = 3;
+			n = 3l;
 			break;
 		default :
-			n = 0;
+			throw new ParametrosInvalidos("Parámetro inválido para la comida del dia");
 		}
 		return (this.getComidas().get(n));
 	}
 	
 	
 	public void setComida(ComidaDelDia comidaDelDia, Comida unaComida) {
-		int n ;
+		Long n ;
 		switch(comidaDelDia) {
 		case DESAYUNO :
-			n = 0;
-			break; // optional
+			n = 0l;
+			break;
 		case ALMUERZO :
-			n = 1;
-			break; // optional
+			n = 1l;
+			break;
 		case MERIENDA :
-			n = 2;
-			break; // optional
+			n = 2l;
+			break;
 		case CENA :
-			n = 3;
-			break; // optional
-			// You can have any number of case statements.
-		default : // Optional
-			n = 0;
+			n = 3l;
+			break;
+		default :
+			n = 0l;
 		}
 		this.getComidas().put(n, unaComida);
 	}

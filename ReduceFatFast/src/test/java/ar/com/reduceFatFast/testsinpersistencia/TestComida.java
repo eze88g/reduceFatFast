@@ -39,8 +39,8 @@ public class TestComida {
 		DietaSemanal dieta = new DietaSemanal();
 		unaComida = paciente.crearComida("Pizza");
 		unaComida.agregarIngrediente("Sal", 100, "gr");
-		dieta.agregarComida(unaComida, 1, ComidaDelDia.ALMUERZO);
-		assertEquals ("Pizza",dieta.getDia(1).getComida(ComidaDelDia.ALMUERZO).getNombre());
+		dieta.agregarComida(unaComida, 1l, ComidaDelDia.ALMUERZO);
+		assertEquals ("Pizza",dieta.getDia(1l).getComida(ComidaDelDia.ALMUERZO).getNombre());
 	}
 	
 	@Test

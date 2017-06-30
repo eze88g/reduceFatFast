@@ -61,7 +61,7 @@ public @Data class Grupo {
 		return false;
 	}
 
-	public void agregarComida(Comida unaComida, Integer numeroDeDia, ComidaDelDia comidaDelDia) {
+	public void agregarComida(Comida unaComida, Long numeroDeDia, ComidaDelDia comidaDelDia) {
 		this.getDietaSemanal().agregarComida(unaComida, numeroDeDia, comidaDelDia);
 	}
 

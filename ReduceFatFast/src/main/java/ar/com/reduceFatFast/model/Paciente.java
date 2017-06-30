@@ -53,7 +53,7 @@ public @Data class Paciente extends Usuario {
 		return(unaComida);
 	}
 	
-	public void agregarComida (Comida unaComida, Integer numeroDeDia, ComidaDelDia comidaDelDia ){
+	public void agregarComida (Comida unaComida, Long numeroDeDia, ComidaDelDia comidaDelDia ){
 		if (grupo == null)
 			System.out.println("Error: Grupo no asignado");
 		else

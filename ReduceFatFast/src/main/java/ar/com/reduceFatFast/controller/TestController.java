@@ -74,10 +74,10 @@ public class TestController {
 	public Dia crearDia(){
 		Dia dia = new Dia();
 		List<Comida> comidas = this.getComidas();
-		dia.getComidas().put(0, comidas.get(0));
-		dia.getComidas().put(1, comidas.get(0));
-		dia.getComidas().put(2, comidas.get(0));
-		dia.getComidas().put(3, comidas.get(0));
+		dia.getComidas().put(0l, comidas.get(0));
+		dia.getComidas().put(1l, comidas.get(0));
+		dia.getComidas().put(2l, comidas.get(0));
+		dia.getComidas().put(3l, comidas.get(0));
 		
 		this.getService().add(dia);
 		
@@ -93,9 +93,9 @@ public class TestController {
 	public DietaSemanal addDieta(){
 		DietaSemanal dieta = new DietaSemanal();
 		List<Comida> comidas = this.getComidas();
-		Map<Integer,Dia> dias = new HashMap<Integer,Dia>();
+		Map<Long,Dia> dias = new HashMap<Long,Dia>();
 		Dia dia;
-		for (int i=0; i<7; i++) {
+		for (long i=0; i<7; i++) {
 			dia = new Dia();
 			dia.setCantidadComidasPorDia(4);	
 			dia.setComida(ComidaDelDia.ALMUERZO, comidas.get(0));

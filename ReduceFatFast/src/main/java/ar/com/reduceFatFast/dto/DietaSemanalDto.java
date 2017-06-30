@@ -24,7 +24,7 @@ public @Data class DietaSemanalDto {
 		this.setValidacion(dieta.isValidacion());
 		this.setDias(new ArrayList<DiaDto>());
 		
-		for (Integer each: dieta.getDias().keySet()) {
+		for (Long each: dieta.getDias().keySet()) {
 			this.getDias().add(new DiaDto(dieta.getDia(each), each));
 		}
 	}

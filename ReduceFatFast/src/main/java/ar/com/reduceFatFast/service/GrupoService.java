@@ -148,26 +148,26 @@ public class GrupoService extends AbstractService {
 		return false;
 	}
 
-	public void agregarComidaADieta(long idGrupo, long idComida, Integer dia, int idComidaDelDia) {
-		if (dia < 1 || dia > 7) {
-			throw new ParametrosInvalidos("El dia debe poseer un valor entre 1 y 4");
+	public void agregarComidaADieta(long idGrupo, long idComida, Long dia, int idComidaDelDia) {
+		if (dia < 0 || dia > 6) {
+			throw new ParametrosInvalidos("El dia debe poseer un valor entre 0 y 6");
 		}
 		ComidaDelDia comidaDelDia = null;
 		switch (idComidaDelDia) {
-		case 1:
+		case 0:
 			comidaDelDia = ComidaDelDia.DESAYUNO;
 			break;
-		case 2:
+		case 1:
 			comidaDelDia = ComidaDelDia.ALMUERZO;
 			break;
-		case 3:
+		case 2:
 			comidaDelDia = ComidaDelDia.MERIENDA;
 			break;
-		case 4:
+		case 3:
 			comidaDelDia = ComidaDelDia.CENA;
 			break;
 		default:
-			throw new ParametrosInvalidos("La comida del dia debe poseer un valor entre 1 y 4");
+			throw new ParametrosInvalidos("La comida del dia debe poseer un valor entre 0 y 3");
 		}
 		
 		Grupo grupo = this.getGrupoRepository().findOne(idGrupo);

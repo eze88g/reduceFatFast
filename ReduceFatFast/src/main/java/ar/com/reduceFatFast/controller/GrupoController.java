@@ -172,7 +172,7 @@ public class GrupoController extends AbstractController {
 	}
 	)
     @RequestMapping(path="/grupos/{idGrupo}/dieta/comidas", method = RequestMethod.POST)
-    public ResponseEntity<String> agregarComidaADieta(@PathVariable("idGrupo") long idGrupo, long idComida, Integer dia, int comidaDelDia){
+    public ResponseEntity<String> agregarComidaADieta(@PathVariable("idGrupo") long idGrupo, long idComida, Long dia, int comidaDelDia){
     	this.getGrupoService().agregarComidaADieta(idGrupo, idComida, dia, comidaDelDia);
 		
     	return new ResponseEntity<>(HttpStatus.OK);
