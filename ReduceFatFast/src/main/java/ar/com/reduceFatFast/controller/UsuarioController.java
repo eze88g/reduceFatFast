@@ -26,7 +26,7 @@ import ar.com.reduceFatFast.service.UsuarioService;
  */
 @Validated
 @RestController
-public class UsuarioController {
+public class UsuarioController extends AbstractController{
 	
     @Autowired
     private UsuarioService usuarioService;

@@ -10,11 +10,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ar.com.reduceFatFast.exception.ParametrosInvalidos;
+import ar.com.reduceFatFast.model.Comida;
+import ar.com.reduceFatFast.model.Comida.ComidaDelDia;
 import ar.com.reduceFatFast.model.DietaSemanal;
 import ar.com.reduceFatFast.model.Grupo;
 import ar.com.reduceFatFast.model.Nutricionista;
 import ar.com.reduceFatFast.model.Paciente;
 import ar.com.reduceFatFast.model.Sistema;
+import ar.com.reduceFatFast.repository.ComidaRepository;
 import ar.com.reduceFatFast.repository.GrupoRepository;
 import ar.com.reduceFatFast.repository.NutricionistaRepository;
 import ar.com.reduceFatFast.repository.PacienteRepository;
@@ -41,6 +45,9 @@ public class GrupoService {
 	@Autowired
 	private PacienteRepository pacienteRepository;
 	
+	@Autowired
+	private ComidaRepository comidaRepository;
+	
 	private SistemaRepository getRepository() {
 		return repository;
 	}
@@ -65,6 +72,14 @@ public class GrupoService {
 		this.pacienteRepository = pacienteRepository;
 	}
 	
+	private ComidaRepository getComidaRepository() {
+		return comidaRepository;
+	}
+
+	private void setComidaRepository(ComidaRepository comidaRepository) {
+		this.comidaRepository = comidaRepository;
+	}
+
 	private Sistema getSistema(){
 		return getRepository().findOne(1l);
 	}
@@ -135,6 +150,34 @@ public class GrupoService {
 		}
 		
 		return false;
+	}
+
+	public void agregarComidaADieta(long idGrupo, long idComida, Integer dia, int idComidaDelDia) {
+		if (dia < 1 || dia > 7) {
+			throw new ParametrosInvalidos("El dia debe poseer un valor entre 1 y 4");
+		}
+		ComidaDelDia comidaDelDia = null;
+		switch (idComidaDelDia) {
+		case 1:
+			comidaDelDia = ComidaDelDia.DESAYUNO;
+			break;
+		case 2:
+			comidaDelDia = ComidaDelDia.ALMUERZO;
+			break;
+		case 3:
+			comidaDelDia = ComidaDelDia.MERIENDA;
+			break;
+		case 4:
+			comidaDelDia = ComidaDelDia.CENA;
+			break;
+		default:
+			throw new ParametrosInvalidos("La comida del dia debe poseer un valor entre 1 y 4");
+		}
+		
+		Grupo grupo = this.getGrupoRepository().findOne(idGrupo);
+		Comida comida = this.getComidaRepository().findOne(idComida);
+				
+		grupo.agregarComida(comida, dia, comidaDelDia);
 	}
 	
 }

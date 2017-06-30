@@ -26,7 +26,7 @@ import ar.com.reduceFatFast.service.AccountService;
 @Configuration
 @Validated
 @RestController
-public class AccountController {
+public class AccountController extends AbstractController{
 	
 	@Value("${errorLoginMessage}")
 	private String errorLoginMessage;

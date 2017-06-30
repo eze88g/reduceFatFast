@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,7 +30,8 @@ import ar.com.reduceFatFast.service.GrupoService;
  */
 @Validated
 @RestController
-public class GrupoController {
+@ControllerAdvice
+public class GrupoController extends AbstractController {
 	
     @Autowired
     private GrupoService grupoService;
@@ -106,5 +108,12 @@ public class GrupoController {
     	} else {
     		return new ResponseEntity<>("Dieta no validada", HttpStatus.CONFLICT);
     	}
+    }
+    
+    @RequestMapping(path="/grupos/{idGrupo}/dieta/comidas", method = RequestMethod.POST)
+    public ResponseEntity<String> agregarComidaADieta(@PathVariable("idGrupo") long idGrupo, long idComida, Integer dia, int comidaDelDia){
+    	this.getGrupoService().agregarComidaADieta(idGrupo, idComida, dia, comidaDelDia);
+		
+    	return new ResponseEntity<>(HttpStatus.OK);
     }
 }

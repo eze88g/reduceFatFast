@@ -14,6 +14,7 @@ import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import ar.com.reduceFatFast.model.Comida.ComidaDelDia;
 import lombok.Data;
 
 @Entity
@@ -58,6 +59,10 @@ public @Data class Grupo {
 		}
 		
 		return false;
+	}
+
+	public void agregarComida(Comida unaComida, Integer numeroDeDia, ComidaDelDia comidaDelDia) {
+		this.getDietaSemanal().agregarComida(unaComida, numeroDeDia, comidaDelDia);
 	}
 
 }

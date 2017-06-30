@@ -28,7 +28,7 @@ import ar.com.reduceFatFast.service.ComidaService;
  */
 @Validated
 @RestController
-public class ComidaController {
+public class ComidaController extends AbstractController{
 	
     @Autowired
     private ComidaService comidaService;

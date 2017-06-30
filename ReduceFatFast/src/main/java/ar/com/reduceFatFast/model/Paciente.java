@@ -58,7 +58,7 @@ public @Data class Paciente extends Usuario {
 			System.out.println("Error: Grupo no asignado");
 		else
 		{
-			grupo.getDietaSemanal().agregarComida(unaComida, numeroDeDia, comidaDelDia);
+			grupo.agregarComida(unaComida, numeroDeDia, comidaDelDia);
 		}
 	}
 }

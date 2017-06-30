@@ -33,8 +33,7 @@ public @Data class DietaSemanal {
 	}
 	
 	public void agregarComida (Comida unaComida, Integer numeroDia, ComidaDelDia comidaDelDia){
-		Dia selected;
-		if ( dias.containsKey(numeroDia) != true )
+		if (dias.containsKey(numeroDia) != true )
 			dias.put(numeroDia,new Dia());
 		dias.get(numeroDia).setComida(comidaDelDia, unaComida);
 	}
