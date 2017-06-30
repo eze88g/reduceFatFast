@@ -1,18 +1,14 @@
 package ar.com.reduceFatFast.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
@@ -54,6 +50,5 @@ public @Data class DietaSemanal {
 	public Dia getDia(int j) {
 		return this.getDias().get(j);
 	}
-	
 	
 }

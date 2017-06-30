@@ -42,15 +42,15 @@ public class TestGrupo {
 		assertEquals(1, sistema.getGrupos().size());
 	}
 	*/
-	@Test
-	public void testBorrarGrupo() {
-		unGrupo = new Grupo(unNutricionista,"Gorditos");
-		sistema.agregarGrupo(unGrupo);
-		assertEquals(1, sistema.getGrupos().size());
-		assertEquals(true,sistema.borrarGrupo(unGrupo));
-		assertEquals(0, unNutricionista.getGrupos().size());
-		assertEquals(0, sistema.getGrupos().size());
-	}
+//	@Test
+//	public void testBorrarGrupo() {
+//		unGrupo = new Grupo(unNutricionista,"Gorditos");
+//		sistema.agregarGrupo(unGrupo);
+//		assertEquals(1, sistema.getGrupos().size());
+//		assertEquals(true,sistema.borrarGrupo(unGrupo));
+//		assertEquals(0, unNutricionista.getGrupos().size());
+//		assertEquals(0, sistema.getGrupos().size());
+//	}
 
 	@Test
 	public void testCrearGrupo() {

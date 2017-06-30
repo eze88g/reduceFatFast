@@ -3,6 +3,7 @@
  */
 package ar.com.reduceFatFast.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ar.com.reduceFatFast.model.Grupo;
@@ -28,6 +29,7 @@ public @Data class GrupoDto {
 		this.setNombre(grupo.getNombre());
 		this.setNutricionista(new NutricionistaDto(grupo.getNutricionista()));
 		this.setDietaSemanal(new DietaSemanalDto(grupo.getDietaSemanal()));
+		this.setPacientes(new ArrayList<>());
 		for(Paciente each : grupo.getPacientes()) {
 			this.getPacientes().add(new PacienteDto(each));
 		}
