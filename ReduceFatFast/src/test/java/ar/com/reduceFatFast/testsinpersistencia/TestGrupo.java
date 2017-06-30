@@ -1,4 +1,4 @@
-package modelTest;
+package ar.com.reduceFatFast.testsinpersistencia;
 
 import static org.junit.Assert.*;
 

@@ -33,15 +33,13 @@ public class ComidaService extends AbstractService {
 	}
 
 	@Transactional
-	public Comida crearComida(int idUsuario, String nombre, long cantidadCalorias) {
+	synchronized public Comida crearComida(int idUsuario, String nombre, long cantidadCalorias) {
 		Comida comida = new Comida(nombre);
 		comida.setCantidadCalorias(cantidadCalorias);
 		
-		Sistema sistema;
-		synchronized(sistema = getSistema()) {
-			sistema.agregarComida(comida);
-			return comida;
-		}	
+		Sistema sistema = getSistema();
+		sistema.agregarComida(comida);
+		return comida;
 	}
 
 	@Transactional
