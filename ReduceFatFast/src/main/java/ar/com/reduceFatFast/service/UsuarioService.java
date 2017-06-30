@@ -22,7 +22,7 @@ import ar.com.reduceFatFast.repository.SistemaRepository;
 @Service
 @Configuration
 @Transactional
-public class UsuarioService {
+public class UsuarioService extends AbstractService {
 	
 	@Autowired
 	private SistemaRepository repository;
@@ -33,14 +33,6 @@ public class UsuarioService {
 	@Autowired
 	private PacienteRepository pacienteRepository;
 	
-	private SistemaRepository getRepository() {
-		return repository;
-	}
-
-	private void setRepository(SistemaRepository repository) {
-		this.repository = repository;
-	}
-
 	private PacienteRepository getPacienteRepository() {
 		return pacienteRepository;
 	}

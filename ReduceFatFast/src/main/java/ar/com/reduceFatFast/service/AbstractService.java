@@ -17,11 +17,11 @@ public class AbstractService {
 	@Autowired
 	private SistemaRepository repository;
 	
-	private SistemaRepository getRepository() {
+	protected SistemaRepository getRepository() {
 		return repository;
 	}
 
-	private void setRepository(SistemaRepository repository) {
+	protected void setRepository(SistemaRepository repository) {
 		this.repository = repository;
 	}
 

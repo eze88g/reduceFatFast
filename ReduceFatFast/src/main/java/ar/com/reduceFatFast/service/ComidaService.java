@@ -16,7 +16,6 @@ import ar.com.reduceFatFast.model.Comida;
 import ar.com.reduceFatFast.model.Ingrediente;
 import ar.com.reduceFatFast.model.Sistema;
 import ar.com.reduceFatFast.repository.ComidaRepository;
-import ar.com.reduceFatFast.repository.SistemaRepository;
 
 /**
  * @author Matias
@@ -24,15 +23,13 @@ import ar.com.reduceFatFast.repository.SistemaRepository;
  */
 @Service
 @Configuration
-public class ComidaService {
+public class ComidaService extends AbstractService {
 
-	@Autowired
-	private SistemaRepository repository;
 	@Autowired
 	private ComidaRepository comidaRepository;
 	
 	private Sistema getSistema(){
-		return repository.findOne(1l);
+		return this.getRepository().findOne(1l);
 	}
 
 	@Transactional
@@ -48,26 +45,22 @@ public class ComidaService {
 
 	@Transactional
 	public Comida editarComida(long idComida, int idUsuario, String nombre, long cantidadCalorias) {
-		Comida comidaParaEditar;
-		try{
-			comidaParaEditar = comidaRepository.findOne(idComida);
-			comidaParaEditar.setNombre(nombre);
-			comidaParaEditar.setCantidadCalorias(cantidadCalorias);
-		}catch(Exception e){
-			throw e;
-		}
+		Comida comidaParaEditar = comidaRepository.findOne(idComida);
+		this.checkearObjeto(comidaParaEditar, "Comida", idComida);
+		
+		comidaParaEditar.setNombre(nombre);
+		comidaParaEditar.setCantidadCalorias(cantidadCalorias);
+
 		return comidaParaEditar;
 	}
 	
 	@Transactional
 	public Comida agregarIngrediente(int idUsuario, long idComida, String nombre, int cantidad, String medida) {
-		Comida comidaParaEditar = null;
-		try{
-			comidaParaEditar = comidaRepository.findOne(idComida);
-			comidaParaEditar.agregarIngrediente(nombre, cantidad, medida);			
-		}catch(Exception e){
-			throw e;
-		}
+		Comida comidaParaEditar = comidaRepository.findOne(idComida);
+		this.checkearObjeto(comidaParaEditar, "Comida", idComida);
+		
+		comidaParaEditar.agregarIngrediente(nombre, cantidad, medida);			
+		
 		return comidaParaEditar;
 	}
 
@@ -76,22 +69,22 @@ public class ComidaService {
 	}
 
 	public List<Ingrediente> listarIngredientes(long idComida) {
-		try{
-			Comida comida = this.comidaRepository.findOne(idComida);
-			if(comida!=null){
-				return comida.getIngredientes();
-			}else{
-				return null;
-			}
-		}catch(Exception e){
-			throw e;
+		Comida comida = this.comidaRepository.findOne(idComida);
+		this.checkearObjeto(comida, "Comida", idComida);
+		
+		if(comida!=null){
+			return comida.getIngredientes();
+		}else{
+			return null;
 		}
 	}
 
 	@Transactional
 	public boolean eliminarComida(long idComida) {
-		Sistema sistema = this.repository.findOne(1l);
+		Sistema sistema = this.getRepository().findOne(1l);
 		Comida comida = this.comidaRepository.findOne(idComida);
+		this.checkearObjeto(comida, "Comida", idComida);
+		
 		Integer i = sistema.getComidas().indexOf(comida);
 		sistema.getComidas().remove(comida);
 		return true;
@@ -107,6 +100,8 @@ public class ComidaService {
 	public boolean eliminarIngrediente(long idComida, long idIngrediente) {
 		
 		Comida comida = this.comidaRepository.findOne(idComida);
+		this.checkearObjeto(comida, "Comida", idComida);
+		
 		if(comida!=null){
 			Optional<Ingrediente> ingrediente = comida.getIngredientes().stream().filter(x -> x.getId()==idIngrediente).findFirst();
 			comida.getIngredientes().remove((Ingrediente)ingrediente.get());
@@ -118,6 +113,8 @@ public class ComidaService {
 	public Comida actualizarIngrediente(long idComida, long idIngrediente, String nombre, int cantidad,
 			String medida) {
 		Comida comida = this.comidaRepository.findOne(idComida);
+		this.checkearObjeto(comida, "Comida", idComida);
+		
 		List<Ingrediente> ingredientes = this.listarIngredientes(idComida).stream().filter(x -> x.getId() == idIngrediente).collect(Collectors.toList());
 		for (Ingrediente ingrediente : ingredientes) {
 			Integer i = comida.getIngredientes().indexOf(ingrediente);
@@ -126,20 +123,6 @@ public class ComidaService {
 			comida.getIngredientes().get(i).setUnidad(medida);
 		}
 		return comida;
-	}
-
-	/**
-	 * @return the repository
-	 */
-	public SistemaRepository getRepository() {
-		return repository;
-	}
-
-	/**
-	 * @param repository the repository to set
-	 */
-	public void setRepository(SistemaRepository repository) {
-		this.repository = repository;
 	}
 	
 }

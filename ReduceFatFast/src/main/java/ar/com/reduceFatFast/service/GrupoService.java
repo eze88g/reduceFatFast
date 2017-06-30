@@ -24,7 +24,6 @@ import ar.com.reduceFatFast.repository.ComidaRepository;
 import ar.com.reduceFatFast.repository.GrupoRepository;
 import ar.com.reduceFatFast.repository.NutricionistaRepository;
 import ar.com.reduceFatFast.repository.PacienteRepository;
-import ar.com.reduceFatFast.repository.SistemaRepository;
 
 /**
  * @author Matias
@@ -33,10 +32,7 @@ import ar.com.reduceFatFast.repository.SistemaRepository;
 @Service
 @Configuration
 @Transactional
-public class GrupoService {
-	
-	@Autowired
-	private SistemaRepository repository;
+public class GrupoService extends AbstractService {
 	
 	@Autowired
 	private GrupoRepository grupoRepository;
@@ -50,14 +46,6 @@ public class GrupoService {
 	@Autowired
 	private ComidaRepository comidaRepository;
 	
-	private SistemaRepository getRepository() {
-		return repository;
-	}
-
-	private void setRepository(SistemaRepository repository) {
-		this.repository = repository;
-	}
-
 	private GrupoRepository getGrupoRepository() {
 		return grupoRepository;
 	}
@@ -88,6 +76,7 @@ public class GrupoService {
 
 	public Grupo crearGrupo(long id, String nombre) {
 		Nutricionista nutricionista = nutricionistaRepository.findOne(id);
+		this.checkearObjeto(nutricionista, "Nutricionista", id);
 		
 		if (nutricionista == null) {
 			return null;
@@ -104,9 +93,11 @@ public class GrupoService {
 	public boolean agregarMiembro(long idNutricionista, long idGrupo, long idPaciente) {
 		
 		Grupo grupo = this.getGrupoRepository().findOne(idGrupo);
+		this.checkearObjeto(grupo, "Grupo", idGrupo);
 		
 		if (null != grupo) {
 			Paciente paciente = this.getPacienteRepository().findOne(idPaciente);
+			this.checkearObjeto(paciente, "Paciente", idPaciente);
 			
 			if (null != paciente) {
 				grupo.agregarPaciente(paciente);
@@ -120,6 +111,7 @@ public class GrupoService {
 	public DietaSemanal obtenerDieta(long idGrupo) {
 		
 		Grupo grupo = this.getGrupoRepository().findOne(idGrupo);
+		this.checkearObjeto(grupo, "Grupo", idGrupo);
 		
 		if (null != grupo) {
 			return grupo.getDietaSemanal();
@@ -131,6 +123,7 @@ public class GrupoService {
 	public List<Paciente> listarMiembros(long idGrupo) {
 		
 		Grupo grupo = this.getGrupoRepository().findOne(idGrupo);
+		this.checkearObjeto(grupo, "Grupo", idGrupo);
 		
 		if (null != grupo) {
 			return grupo.getPacientes();
@@ -157,7 +150,10 @@ public class GrupoService {
 
 	public boolean validarDieta(long idGrupo, long idNutricionista) {
 		Grupo grupo = this.getGrupoRepository().findOne(idGrupo);
+		this.checkearObjeto(grupo, "Grupo", idGrupo);
+		
 		Nutricionista nutricionista = nutricionistaRepository.findOne(idNutricionista);
+		this.checkearObjeto(nutricionista, "Nutricionista", idNutricionista);
 		
 		if (null != nutricionista && null != grupo) {
 			return grupo.validarDieta(nutricionista);
@@ -189,7 +185,10 @@ public class GrupoService {
 		}
 		
 		Grupo grupo = this.getGrupoRepository().findOne(idGrupo);
+		this.checkearObjeto(grupo, "Grupo", idGrupo);
+		
 		Comida comida = this.getComidaRepository().findOne(idComida);
+		this.checkearObjeto(comida, "Comida", idComida);
 				
 		grupo.agregarComida(comida, dia, comidaDelDia);
 	}
