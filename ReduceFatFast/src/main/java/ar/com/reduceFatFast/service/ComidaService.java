@@ -7,8 +7,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,47 +27,65 @@ import ar.com.reduceFatFast.repository.ComidaRepository;
 @Service
 @Configuration
 public class ComidaService extends AbstractService {
+	
+	private static final Logger logger = LoggerFactory.getLogger(ComidaService.class);
 
 	@Autowired
 	private ComidaRepository comidaRepository;
 	
-	private Sistema getSistema(){
-		return this.getRepository().findOne(1l);
+	synchronized private Sistema getSistema(){
+		List<Sistema> sistemas = (List<Sistema>) this.getRepository().findAll();
+		logger.info("Sistemas size:" + sistemas.size());
+		logger.info(sistemas.toString());
+		return sistemas.get(0);
 	}
 
 	@Transactional
 	synchronized public Comida crearComida(int idUsuario, String nombre, long cantidadCalorias) {
+		logger.debug(Thread.currentThread().getName() + "- Comenzando: Crear Comida");
 		Comida comida = new Comida(nombre);
 		comida.setCantidadCalorias(cantidadCalorias);
 		
 		Sistema sistema = getSistema();
 		sistema.agregarComida(comida);
+		logger.debug(Thread.currentThread().getName() + "- Finalizando: Crear Comida");
 		return comida;
 	}
 
 	@Transactional
-	public Comida editarComida(long idComida, int idUsuario, String nombre, long cantidadCalorias) {
-		Comida comidaParaEditar = comidaRepository.findOne(idComida);
-		this.checkearObjeto(comidaParaEditar, "Comida", idComida);
-		
-		synchronized (comidaParaEditar){
-			comidaParaEditar.setNombre(nombre);
-			comidaParaEditar.setCantidadCalorias(cantidadCalorias);
+	public Comida editarComida(long idComida, int idUsuario, String nombre, long cantidadCalorias) throws ObjectOptimisticLockingFailureException {
+		try{
+			logger.debug(Thread.currentThread().getName() + "- Comenzando: Editar Comida");
+			Comida comidaParaEditar = comidaRepository.findOne(idComida);
+			this.checkearObjeto(comidaParaEditar, "Comida", idComida);
+			
+			 synchronized (comidaParaEditar){
+				comidaParaEditar.setNombre(nombre);
+				comidaParaEditar.setCantidadCalorias(cantidadCalorias);
+			}
+			logger.debug(Thread.currentThread().getName() + "- Finalizando: Editar Comida");
+			return comidaParaEditar;			
+		}catch(ObjectOptimisticLockingFailureException e){
+			logger.debug("Ocurrio un error tratando de editar una comida");
+			throw e;
 		}
 
-		return comidaParaEditar;
 	}
 	
 	@Transactional
-	public Comida agregarIngrediente(int idUsuario, long idComida, String nombre, int cantidad, String medida) {
-		Comida comidaParaEditar = comidaRepository.findOne(idComida);
-		this.checkearObjeto(comidaParaEditar, "Comida", idComida);
-		
-		synchronized (comidaParaEditar){
-			comidaParaEditar.agregarIngrediente(nombre, cantidad, medida);
+	public Comida agregarIngrediente(int idUsuario, long idComida, String nombre, int cantidad, String medida) throws ObjectOptimisticLockingFailureException {
+		try{
+			Comida comidaParaEditar = comidaRepository.findOne(idComida);
+			this.checkearObjeto(comidaParaEditar, "Comida", idComida);	
+			synchronized (comidaParaEditar){
+				comidaParaEditar.agregarIngrediente(nombre, cantidad, medida);
+			}	
+			return comidaParaEditar;			
+		}catch(ObjectOptimisticLockingFailureException e){
+			logger.debug("Ocurrio un error tratando de editar una comida");
+			throw e;
 		}
-		
-		return comidaParaEditar;
+
 	}
 
 	synchronized public List<Comida> listarComidas() {
