@@ -13,7 +13,6 @@ import ar.com.reduceFatFast.model.Paciente;
 import ar.com.reduceFatFast.model.Sistema;
 import ar.com.reduceFatFast.repository.NutricionistaRepository;
 import ar.com.reduceFatFast.repository.PacienteRepository;
-import ar.com.reduceFatFast.repository.SistemaRepository;
 
 /**
  * @author Matias
@@ -23,9 +22,6 @@ import ar.com.reduceFatFast.repository.SistemaRepository;
 @Configuration
 @Transactional
 public class UsuarioService extends AbstractService {
-	
-	@Autowired
-	private SistemaRepository repository;
 	
 	@Autowired
 	private NutricionistaRepository nutricionistaRepository;
