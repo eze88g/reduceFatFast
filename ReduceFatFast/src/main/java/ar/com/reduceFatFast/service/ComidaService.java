@@ -35,8 +35,6 @@ public class ComidaService extends AbstractService {
 	
 	synchronized private Sistema getSistema(){
 		List<Sistema> sistemas = (List<Sistema>) this.getRepository().findAll();
-		logger.info("Sistemas size:" + sistemas.size());
-		logger.info(sistemas.toString());
 		return sistemas.get(0);
 	}
 
