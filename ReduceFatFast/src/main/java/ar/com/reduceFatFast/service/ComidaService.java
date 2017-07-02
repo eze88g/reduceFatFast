@@ -39,7 +39,7 @@ public class ComidaService extends AbstractService {
 	}
 
 	@Transactional
-	synchronized public Comida crearComida(int idUsuario, String nombre, long cantidadCalorias) {
+	synchronized public Comida crearComida(long idUsuario, String nombre, long cantidadCalorias) {
 		logger.debug(Thread.currentThread().getName() + "- Comenzando: Crear Comida");
 		Comida comida = new Comida(nombre);
 		comida.setCantidadCalorias(cantidadCalorias);
@@ -71,7 +71,7 @@ public class ComidaService extends AbstractService {
 	}
 	
 	@Transactional
-	public Comida agregarIngrediente(int idUsuario, long idComida, String nombre, int cantidad, String medida) throws ObjectOptimisticLockingFailureException {
+	public Comida agregarIngrediente(long idUsuario, long idComida, String nombre, int cantidad, String medida) throws ObjectOptimisticLockingFailureException {
 		try{
 			Comida comidaParaEditar = comidaRepository.findOne(idComida);
 			this.checkearObjeto(comidaParaEditar, "Comida", idComida);	

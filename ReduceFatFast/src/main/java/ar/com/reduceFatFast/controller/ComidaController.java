@@ -3,6 +3,7 @@
  */
 package ar.com.reduceFatFast.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import ar.com.reduceFatFast.dto.ComidaDto;
+import ar.com.reduceFatFast.dto.IngredienteDto;
 import ar.com.reduceFatFast.model.Comida;
 import ar.com.reduceFatFast.model.Ingrediente;
 import ar.com.reduceFatFast.service.ComidaService;
@@ -53,14 +56,10 @@ public class ComidaController extends AbstractController{
 	}
 	)
     @RequestMapping(path="/comidas", method = RequestMethod.POST, consumes = "application/json")
-    public ResponseEntity<Comida> crearComida(int idUsuario, String nombre, long cantidadCalorias){
+    public ResponseEntity<ComidaDto> crearComida(int idUsuario, String nombre, long cantidadCalorias){
     	Comida comida = this.getComidaService().crearComida(idUsuario, nombre, cantidadCalorias);
-    	if (comida.getId()!=0) {
-    		ResponseEntity response = new ResponseEntity<>(comida, HttpStatus.OK);
-    		return response;
-    	} else {
-    		return new ResponseEntity<>(null, HttpStatus.CONFLICT);
-    	}
+    	
+    	return new ResponseEntity<>(new ComidaDto(comida), HttpStatus.OK);
     }
     
 	@ApiOperation(value = "Retorna la lista de comidas existentes en el sistema", response = Comida.class)
@@ -72,10 +71,16 @@ public class ComidaController extends AbstractController{
 	}
 	)
     @RequestMapping(path="/comidas", method = RequestMethod.GET)
-    public ResponseEntity<List<Comida>> listarComidas(){
+    public ResponseEntity<List<ComidaDto>> listarComidas(){
     	
     	List<Comida> result = this.getComidaService().listarComidas();	
-    	return new ResponseEntity<>(result, HttpStatus.OK);
+    	
+    	List<ComidaDto> comidas = new ArrayList<>();
+    	for (Comida each: result) {
+    		comidas.add(new ComidaDto(each));
+    	}
+    	
+    	return new ResponseEntity<>(comidas, HttpStatus.OK);
     }
 
 	@ApiOperation(value = "Edita una comida pasada como parametro", response = Comida.class)
@@ -105,7 +110,7 @@ public class ComidaController extends AbstractController{
 	}
 	)
     @RequestMapping(path="/comidas/{idComida}", method = RequestMethod.DELETE)
-    public ResponseEntity<Comida> eliminarComida(@PathVariable("idComida") long idComida){
+    public ResponseEntity<String> eliminarComida(@PathVariable("idComida") long idComida){
     	if (this.getComidaService().eliminarComida(idComida)) {
     		return new ResponseEntity<>(HttpStatus.OK);
     	} else {
@@ -122,13 +127,10 @@ public class ComidaController extends AbstractController{
 	}
 	)
     @RequestMapping(path="/comidas/{idComida}/ingredientes", method = RequestMethod.POST)
-    public ResponseEntity<Comida> agregarIngrediente(@PathVariable("idComida") long idComida, int idUsuario, String nombre, int cantidad, String medida){
+    public ResponseEntity<ComidaDto> agregarIngrediente(@PathVariable("idComida") long idComida, int idUsuario, String nombre, int cantidad, String medida){
     	Comida comida = this.getComidaService().agregarIngrediente(idUsuario, idComida, nombre, cantidad, medida);
-    	if (comida.getId()!=0) {
-    		return new ResponseEntity<>(comida, HttpStatus.OK);
-    	} else {
-    		return new ResponseEntity<>(null, HttpStatus.CONFLICT);
-    	}
+    	
+    	return new ResponseEntity<>(new ComidaDto(comida), HttpStatus.OK);
     }
     
 	@ApiOperation(value = "Retorna la lista de ingredientes para una comida en particular", response = Comida.class)
@@ -140,11 +142,16 @@ public class ComidaController extends AbstractController{
 	}
 	)
     @RequestMapping(path="/comidas/{idComida}/ingredientes", method = RequestMethod.GET)
-    public ResponseEntity<List<Ingrediente>> listarIngredientes(@PathVariable("idComida") long idComida){
+    public ResponseEntity<List<IngredienteDto>> listarIngredientes(@PathVariable("idComida") long idComida){
     	
-    	List<Ingrediente> result = this.getComidaService().listarIngredientes(idComida); 
+    	List<Ingrediente> result = this.getComidaService().listarIngredientes(idComida);
     	
-    	return new ResponseEntity<>(result, HttpStatus.OK);
+    	List<IngredienteDto> ingredientes = new ArrayList<>();
+    	for (Ingrediente each: result) {
+    		ingredientes.add(new IngredienteDto(each));
+    	}
+    	
+    	return new ResponseEntity<>(ingredientes, HttpStatus.OK);
     }
 
 	@ApiOperation(value = "Retorna la existencia o no de un ingrediente en una comida", response = Comida.class)
@@ -156,12 +163,12 @@ public class ComidaController extends AbstractController{
 	}
 	)
     @RequestMapping(path="/comidas/{idComida}/ingredientes/{idIngrediente}", method = RequestMethod.GET)
-    public ResponseEntity<Optional<Ingrediente>> listarIngredientes(@PathVariable("idComida") long idComida, 
+    public ResponseEntity<IngredienteDto> listarIngredientes(@PathVariable("idComida") long idComida, 
     		@PathVariable("idIngrediente") long idIngrediente){
     	
     	Optional<Ingrediente> result = this.getComidaService().obtenerIngrediente(idComida, idIngrediente); 
     	
-    	return new ResponseEntity<>(result, HttpStatus.OK);
+    	return new ResponseEntity<>(new IngredienteDto(result.get()), HttpStatus.OK);
     }
     
 	@ApiOperation(value = "Elimina un ingrediente para una comida", response = Comida.class)
@@ -192,11 +199,11 @@ public class ComidaController extends AbstractController{
 	}
 	)
     @RequestMapping(path="/comidas/{idComida}/ingredientes/{idIngrediente}", method = RequestMethod.PUT)
-    public ResponseEntity<Comida> actualizarIngrediente(@PathVariable("idComida") long idComida, 
+    public ResponseEntity<ComidaDto> actualizarIngrediente(@PathVariable("idComida") long idComida, 
     		@PathVariable("idIngrediente") long idIngrediente, String nombre, int cantidad, String medida){
     	Comida comida = this.getComidaService().actualizarIngrediente(idComida, idIngrediente, nombre, cantidad, medida);
-    	if (comida!=null) {
-    		return new ResponseEntity<>(comida, HttpStatus.OK);
+    	if (comida != null) {
+    		return new ResponseEntity<>(new ComidaDto(comida), HttpStatus.OK);
     	} else {
     		return new ResponseEntity<>(null, HttpStatus.CONFLICT);
     	}

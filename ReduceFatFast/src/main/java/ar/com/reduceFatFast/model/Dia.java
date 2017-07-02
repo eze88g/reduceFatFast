@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.MapKey;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.Version;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -29,8 +30,10 @@ public @Data class Dia {
 	private long version;
 	@Value("${modelo.cantidadComidasPorDia}")
 	private Integer cantidadComidasPorDia;
-	@ManyToMany(cascade=CascadeType.PERSIST) @JoinColumn(name="id") @MapKey(name="id")
+	@ManyToMany(cascade=CascadeType.PERSIST) @JoinColumn(name="id")
+	@MapKeyColumn(name="numeroComida")
 	private Map<Long,Comida> comidas;
+	private long numeroDia;
 	
 	public Dia() {
 		this.setComidas(new HashMap<Long,Comida>());

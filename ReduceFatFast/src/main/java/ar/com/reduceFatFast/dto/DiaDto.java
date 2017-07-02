@@ -16,14 +16,12 @@ import lombok.Data;
 public @Data class DiaDto {
 	public long id;
 	public Long numero;
-	public Integer cantidadComidasPorDia;
 	public List<ComidaDto> comidas;
 	
 	public DiaDto(Dia dia, Long numero) {
 		super();
 		this.setId(dia.getId());
 		this.setNumero(numero);
-		this.setCantidadComidasPorDia(dia.getCantidadComidasPorDia());
 		this.setComidas(new ArrayList<ComidaDto>());
 		
 		for(Long each : dia.getComidas().keySet()) {
